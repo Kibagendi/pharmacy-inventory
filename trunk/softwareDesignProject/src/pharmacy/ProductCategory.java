@@ -10,7 +10,7 @@ public class ProductCategory {
 	private String name;
 	private String description;
 	private String branch;
-	private double price;
+	private Price price;
 	private int currentStock;
 	private int minStock;
 	private int maxStock;
@@ -23,21 +23,21 @@ public class ProductCategory {
 	public ProductCategory() {
 	}
 
-	public ProductCategory(String name , double price) {
+	public ProductCategory(String name, double price) {
 		this.name = name;
-		currentStock = 0;
-		itemList = new ArrayList<Item> ();
-		this.price = price;
+		this.currentStock = 0;
+		this.itemList = new ArrayList<Item> ();
+		this.price.setPrice(price);
 	}
 	
 	public boolean addItem(Item item){
 		boolean bool;
 		try{
-			this.itemList.add(currentStock, item);
-			currentStock++;
+			this.itemList.add(this.currentStock, item);
+			this.currentStock++;
 			bool = true;
 		}catch(Exception ex) {
-			System.out.println("Error trying to add an item in the product category "+this.name);
+			System.out.println("Error trying to add an item in the product category "+this.name+"\n"+ex);
 			bool = false;
 		}
 		
@@ -87,11 +87,11 @@ public class ProductCategory {
 	}
 
 	public double getPrice() {
-		return price;
+		return this.price.getPrice();
 	}
 
 	public void setPrice(double price) {
-		this.price = price;
+		this.price.setPrice(price);
 	}
 /*
 	public void setCurrentStock(int currentStock) {
@@ -126,11 +126,11 @@ public class ProductCategory {
 		this.itemList = itemList;
 	}
 
-	public boolean isOrdered() {
-		return isOrdered;
+	public boolean getIsOrdered() {
+		return this.isOrdered;
 	}
 
-	public void setOrdered(boolean isOrdered) {
+	public void setIsOrdered(boolean isOrdered) {
 		this.isOrdered = isOrdered;
 	}
 
