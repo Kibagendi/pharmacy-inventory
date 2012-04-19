@@ -12,7 +12,6 @@ public class Price {
 	}
 
 	public void setPrice(double price) {
-		 System.out.println("Price - Price: "+price);
 		this.price = price;
 	}
 	
