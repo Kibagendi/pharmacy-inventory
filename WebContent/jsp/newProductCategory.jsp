@@ -7,15 +7,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
  String name =  request.getParameter("productCategoryName");
- String priceTmp  = request.getParameter("price");
- //String quantityTmp = request.getParameter("quantity");
  
- double price = Double.parseDouble(priceTmp);  
- //int quantity = Integer.parseInt(quantityTmp);
-
+ double price = Double.parseDouble(request.getParameter("price"));  
+ 
+ //ToDo: check if the name and price are valid values.
+ 
  ProductCategory newProductCategory = new ProductCategory(name, price);
-//  session.setAttribute("newProductCategory",newProductCategory);
-
+ 
  List <ProductCategory> catalog = (List <ProductCategory>) session.getAttribute("catalog");
  catalog.add(newProductCategory);
  session.setAttribute("catalog",catalog);
