@@ -27,7 +27,7 @@ public class ProductCategory {
 		this.name = name;
 		this.currentStock = 0;
 		this.itemList = new ArrayList<Item> ();
-		this.price.setPrice(doublePrice);
+		this.price = new Price(doublePrice);		
 	}
 	
 	public boolean addItem(Item item){
@@ -90,8 +90,8 @@ public class ProductCategory {
 		return this.price.getPrice();
 	}
 
-	public void setPrice(double price) {
-		this.price.setPrice(price);
+	public void setPrice(double doublePrice) {
+		this.price.setPrice(doublePrice);
 	}
 /*
 	public void setCurrentStock(int currentStock) {
