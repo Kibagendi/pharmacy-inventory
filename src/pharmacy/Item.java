@@ -55,7 +55,7 @@ public class Item {
 	}
 
 	public String getLocation() {
-		return location;
+		return location == null ? " " : location;
 	}
 
 	public void setLocation(String location) {

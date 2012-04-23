@@ -22,6 +22,7 @@
 	int code= pc.getLastCode()+1;
 	if (request.getParameter("op").equals("new")) {			
 			Date date = new Date();
+			//toDo: Implement the item form
 			date.setDate(date.getDate()+30);
 			Item item = new Item(code, date);
 			pc.addItem(item);
@@ -122,12 +123,14 @@
 
 		<%
 			}
+			session.setAttribute("catalog", catalog);
+
 		%>
 		<p>LastCode: <%=pc.getLastCode()%>
 		<p>CurrentStock: <%=pc.getCurrentStock()%>
 		<p><a href="../jsp/item.jsp?op=new&productCategoryIndex=<%=productCategoryIndex%>">Add more Items</a>
 		<p><a href="../jsp/item.jsp?op=delete&productCategoryIndex=<%=productCategoryIndex%>">Remove more Items</a>
-		<p><a href="../jsp/listItem.jsp?op=list">List Items</a>
+		<p><a href="../jsp/listItem.jsp?op=list&productCategoryIndex=<%=productCategoryIndex%>">List Items</a>
 		<p><a href="../jsp/listProductCategory.jsp?op=list">List Product Categories</a>
 		<p>
 

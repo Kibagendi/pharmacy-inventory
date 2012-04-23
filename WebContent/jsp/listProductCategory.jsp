@@ -6,8 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-	List<ProductCategory> catalog = (List<ProductCategory>) session
-			.getAttribute("catalog");
+	List<ProductCategory> catalog = (List<ProductCategory>) session.getAttribute("catalog");
 	try {
 		if (request.getParameter("op").equals("edit")) {
 			int index = Integer.parseInt(request.getParameter("index"));
@@ -34,8 +33,7 @@
 		} else if (request.getParameter("op").equals("add")) {
 			String name = request.getParameter("productCategoryName");
 
-			double price = Double.parseDouble(request
-					.getParameter("price"));
+			double price = Double.parseDouble(request.getParameter("price"));
 
 			//ToDo: check if the name and price are valid values.
 
@@ -93,9 +91,7 @@
 	</TABLE>
 	<p>
 		Number of categories
-		<%
-		out.println(catalog.size());
-	%>
+		<%out.println(catalog.size());%>
 	
 	<p>
 	<p>
