@@ -1,5 +1,7 @@
-<%@ page language="java" import="pharmacy.ProductCategory"
-	import="java.util.List" import="java.util.ArrayList"
+<%@ page language="java" 
+	import="pharmacy.ProductCategory"
+	import="java.util.List" 
+	import="java.util.ArrayList"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,10 +14,8 @@
 	<%
 		if (request.getParameter("op").equals("edit")) {
 
-			int index = Integer.parseInt(request
-					.getParameter("productCategoryIndex"));
-			List<ProductCategory> catalog = (List<ProductCategory>) session
-					.getAttribute("catalog");
+			int index = Integer.parseInt(request.getParameter("productCategoryIndex"));
+			List<ProductCategory> catalog = (List<ProductCategory>)session.getAttribute("catalog");
 			ProductCategory pc = catalog.get(index);
 	%>
 
@@ -63,12 +63,12 @@
 			<TR>
 				<TD>Add Item to the Product category</TD>
 				<TD><a
-					href="../jsp/newItem.jsp?productCategoryIndex=<%=index%>">Add
+					href="../jsp/item.jsp?op=new&productCategoryIndex=<%=index%>">Add
 						Item</a></TD>
 			<TR>
 				<TD>Remove Item from the Product category</TD>
 				<TD><a
-					href="../jsp/removeItem.jsp?productCategoryIndex=<%=index%>">Remove
+					href="../jsp/item.jsp?op=delete&productCategoryIndex=<%=index%>">Remove
 						Item</a></TD>
 			<TR>
 				<TD colspan="2"><INPUT TYPE=hidden NAME=index VALUE="<%=index%>"></TD>
