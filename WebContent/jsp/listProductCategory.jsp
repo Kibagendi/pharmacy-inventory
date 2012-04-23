@@ -1,5 +1,7 @@
-<%@ page language="java" import="pharmacy.ProductCategory"
-	import="java.util.List" import="java.util.ArrayList"
+<%@ page language="java" 
+	import="pharmacy.ProductCategory"
+	import="java.util.List" 
+	import="java.util.ArrayList"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -13,12 +15,9 @@
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 			String branch = request.getParameter("branch");
-			double price = Double.parseDouble(request
-					.getParameter("price"));
-			int minStock = Integer.parseInt(request
-					.getParameter("minStock"));
-			int maxStock = Integer.parseInt(request
-					.getParameter("maxStock"));
+			double price = Double.parseDouble(request.getParameter("price"));
+			int minStock = Integer.parseInt(request.getParameter("minStock"));
+			int maxStock = Integer.parseInt(request.getParameter("maxStock"));
 
 			catalog.get(index).setName(name);
 			catalog.get(index).setDescription(description);

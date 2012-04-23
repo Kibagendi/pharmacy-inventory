@@ -14,6 +14,7 @@ public class ProductCategory {
 	private int currentStock;
 	private int minStock;
 	private int maxStock;
+	private int lastCode;
 	private boolean isOrdered;
 	private List<Item> itemList;
 
@@ -26,6 +27,7 @@ public class ProductCategory {
 	public ProductCategory(String name, double doublePrice) {
 		this.name = name;
 		this.currentStock = 0;
+		this.lastCode = 0;
 		this.itemList = new ArrayList<Item> ();
 		this.price = new Price(doublePrice);		
 	}
@@ -35,6 +37,7 @@ public class ProductCategory {
 		try{
 			this.itemList.add(this.currentStock, item);
 			this.currentStock++;
+			this.lastCode++;
 			bool = true;
 		}catch(Exception ex) {
 			System.out.println("Error trying to add an item in the product category "+this.name+"\n"+ex);
@@ -134,6 +137,13 @@ public class ProductCategory {
 		this.isOrdered = isOrdered;
 	}
 
-	
+	public int getLastCode() {
+		return this.lastCode;
+	}
+
+/*	public void setLastCode(int lastCode) {
+		this.lastCode = lastCode;
+	}
+*/
 	
 }
