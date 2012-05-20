@@ -1,5 +1,5 @@
 <%@ page language="java" 
-	import="pharmacy.ProductCategory"
+	import="pharmacy.Product"
 	import="pharmacy.Item"
 	import="java.util.List" 
 	import="java.util.Date" 
@@ -16,16 +16,16 @@
 
 
 	<%
-	int productCategoryIndex = Integer.parseInt(request.getParameter("productCategoryIndex"));
-	List<ProductCategory> catalog = (List<ProductCategory>) session.getAttribute("catalog");
-	ProductCategory pc = catalog.get(productCategoryIndex);
-	int code= pc.getLastCode()+1;
-	if (request.getParameter("op").equals("new")) {			
-			Date date = new Date();
-			//toDo: Implement the item form
-			date.setDate(date.getDate()+30);
-			Item item = new Item(code, date);
-			pc.addItem(item);
+		int productCategoryIndex = Integer.parseInt(request.getParameter("productCategoryIndex"));
+		List<Product> catalog = (List<Product>) session.getAttribute("catalog");
+		Product pc = catalog.get(productCategoryIndex);
+		int code= pc.getLastCode()+1;
+		if (request.getParameter("op").equals("new")) {			
+		Date date = new Date();
+		//toDo: Implement the item form
+		date.setDate(date.getDate()+30);
+		Item item = new Item(code, date);
+		pc.addItem(item);
 	%>
 	
 <%-- 	<FORM method="post" action="../jsp/listProductCategory.jsp?op=edit">

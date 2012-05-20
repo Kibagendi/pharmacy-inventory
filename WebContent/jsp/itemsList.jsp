@@ -1,5 +1,5 @@
 <%@ page language="java" 
-	import="pharmacy.ProductCategory"
+	import="pharmacy.Product"
 	import="pharmacy.Item"
 	import="java.util.List" 
 	import="java.util.Date" 
@@ -9,18 +9,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-	List<ProductCategory> catalog = (List<ProductCategory>) session.getAttribute("catalog");
+	List<Product> catalog = (List<Product>) session.getAttribute("catalog");
 	int productCategoryIndex = Integer.parseInt(request.getParameter("productCategoryIndex"));
-	ProductCategory pc = catalog.get(productCategoryIndex);
+	Product pc = catalog.get(productCategoryIndex);
 
 /* 	try {
 		if (request.getParameter("op").equals("edit")) {
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
-			String branch = request.getParameter("branch");
-			double price = Double.parseDouble(request.getParameter("price"));
-			int minStock = Integer.parseInt(request.getParameter("minStock"));
-			int maxStock = Integer.parseInt(request.getParameter("maxStock"));
+	String name = request.getParameter("name");
+	String description = request.getParameter("description");
+	String branch = request.getParameter("branch");
+	double price = Double.parseDouble(request.getParameter("price"));
+	int minStock = Integer.parseInt(request.getParameter("minStock"));
+	int maxStock = Integer.parseInt(request.getParameter("maxStock"));
 
  			catalog.get(index).setName(name);
  			catalog.get(index).setDescription(description);
@@ -29,28 +29,29 @@
  			catalog.get(index).setMinStock(minStock);
  			catalog.get(index).setMaxStock(maxStock);
 
-			session.setAttribute("catalog", catalog);
+	session.setAttribute("catalog", catalog);
 		} else if (request.getParameter("op").equals("delete")) {
-			int index = Integer.parseInt(request.getParameter("index"));
-			catalog.remove(index);
-			session.setAttribute("catalog", catalog);
+	int index = Integer.parseInt(request.getParameter("index"));
+	catalog.remove(index);
+	session.setAttribute("catalog", catalog);
 		} else if (request.getParameter("op").equals("add")) {
-			String name = request.getParameter("productCategoryName");
+	String name = request.getParameter("productCategoryName");
 
-			double price = Double.parseDouble(request.getParameter("price"));
+	double price = Double.parseDouble(request.getParameter("price"));
 
-			//ToDo: check if the name and price are valid values.
+	//ToDo: check if the name and price are valid values.
 
-			ProductCategory newProductCategory = new ProductCategory(name, price);
+	ProductCategory newProductCategory = new ProductCategory(name, price);
 
-			catalog.add(newProductCategory);
-			session.setAttribute("catalog", catalog);
+	catalog.add(newProductCategory);
+	session.setAttribute("catalog", catalog);
 		}
 
 	} catch (Exception ex) {
 		System.out.println("Error: " + ex);
 	}
- */%>
+ */
+%>
 
 
 <html>
