@@ -1,5 +1,6 @@
 <%@ page language="java" 
 	import="pharmacy.Product"
+	import="pharmacy.Price"
 	import="pharmacy.Pharmacy"
 	import="pharmacy.PharmacyLine"
 	import="pharmacy.LaboratoryList"
@@ -68,11 +69,11 @@
 		<TR>
 			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
 			<TD><%=pharmacyLine.getLaboratory().getName()%></TD>
-			<TD><%=pharmacyLine.getBuyPrice().getPrice()%></TD>
-			<TD><%=pharmacyLine.getCurrentStock()%></TD>
-			<TD><%=pharmacyLine.getMinStock()%></TD>
-			<TD><%=pharmacyLine.getMinStock()%></TD>
-			<TD><%=pharmacyLine.getLocation()%></TD>
+			<TD align="center"><%=pharmacyLine.getBuyPrice().getPrice()%></TD>
+			<TD align="center"><%=pharmacyLine.getCurrentStock()%></TD>
+			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
+			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
+			<TD align="center"><%=pharmacyLine.getLocation()%></TD>
 			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=sell&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">Sell</a></TD>
 			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=edit&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">Edit</a></TD>
 			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=delete&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">X</a></TD>
@@ -85,7 +86,7 @@
 	<p>
 		Number of Lines:
 		<%
-		out.println(productCatalog.Size());
+		out.println(pharmacy.Size());
 	%>
 	
 	
@@ -94,11 +95,12 @@
 			// new option
 			} else if (request.getParameter("op").equals("new")) {
 				
-				PharmacyLine pharmacyLine = null;
+				Product product = null;
 				Laboratory laboratory = null;
-				Iterator <PharmacyLine> it_pl = null;
+				Iterator <Product> it_p = null;
 				Iterator <Laboratory> it_l = null;
-				String option = new String();
+				String optionName = new String();
+				int optionCode;
 
 		%>
 	<h3>Adding a new Pharmacy Line in the Inventory:</h3>
@@ -111,14 +113,15 @@
 			<TR>
 				<TD><b>Product:</b></TD>
 				<TD>
-				<select name="product" id="product">
+				<select name="productCode" id="productCode">
 				<%
-				it_pl = pharmacy.getIterator();
-				while (it_pl.hasNext()) {
-					pharmacyLine = it_pl.next();
-					option = pharmacyLine.getProduct().getBrandName();
+				it_p = productCatalog.getIterator();
+				while (it_p.hasNext()) {
+					product = it_p.next();
+					optionName = product.getBrandName();
+					optionCode = product.hashCode();
 				%>	
-						<option value="<%=option%>"><%=option%></option>
+						<option value="<%=optionCode%>"><%=optionName%></option>
 				<%
 				}				
 				%>	
@@ -128,14 +131,15 @@
 			<TR>
 				<TD><b>Laboratory:</b></TD>
 				<TD>
-				<select name="laboratory" id="laboratory">
+				<select name="laboratoryCode" id="laboratoryCode">
 				<%
 				it_l = laboratoryList.getIterator();
 				while (it_l.hasNext()) {
 					laboratory = it_l.next();
-					option = laboratory.getName();
+					optionName = laboratory.getName();
+					optionCode = laboratory.hashCode();
 				%>	
-						<option value="<%=option%>"><%=option%></option>
+						<option value="<%=optionCode%>"><%=optionName%></option>
 				<%
 				}				
 				%>	
@@ -176,35 +180,49 @@
 			<%//postNew
 				} 
 				else if (request.getParameter("op").equals("postNew")) {
-					Product product;
 					
-					 String brandName= request.getParameter("brandName");
-					 String primaryIngredient= request.getParameter("primaryIngredient");
-					 String strength= request.getParameter("strength");
-					 String sizeOrCount= request.getParameter("sizeOrCount");
-					 String doseForm= request.getParameter("doseForm");
-					 String administrationRoute= request.getParameter("administrationRoute");
-
+					 PharmacyLine pharmacyLine;
+					 Product product;
+					 Laboratory laboratory;
+					
+					 int productCode= Integer.parseInt(request.getParameter("productCode"));
+					 int laboratoryCode= Integer.parseInt(request.getParameter("laboratoryCode"));
+					 int currentStock=  Integer.parseInt(request.getParameter("currentStock"));
+					 int minStock=  Integer.parseInt(request.getParameter("minStock"));
+					 int maxStock=  Integer.parseInt(request.getParameter("maxStock"));
+					 String location= request.getParameter("location");
+					 double buyPrice=  Double.valueOf(request.getParameter("buyPrice"));
+					 
+					 boolean ok= false;
+					 
+					 product = productCatalog.getProduct(productCode);
+					 laboratory = laboratoryList.getLaboratory(laboratoryCode);
+					 
 					 try {
 
 					   	 	//añadiendo el producto nuevo
-						 	product = new Product(brandName, primaryIngredient, strength, sizeOrCount, doseForm, administrationRoute);	
-						 	productCatalog.addItem(product);
-						 	session.setAttribute("productCatalog", productCatalog);
+						 	pharmacyLine = new PharmacyLine(product, laboratory, new Price(buyPrice), currentStock, minStock, maxStock, location);	
+						 	ok =pharmacy.addItem(pharmacyLine);
+						 	session.setAttribute("pharmacy", pharmacy);
 						}
 					 catch(Exception ex)
 					 {
-						 System.out.println("Error saving the new product: " + ex);
+						 System.out.println("Error saving the new Pharmacy Line: " + ex);
+						 ok= false;
 					 }
 					
 
 			%>
 		<p>
-			<b>The Line was create succesfully.</b> 
+		<%if (ok) { %>
+			<b>The Pharmacy Line was create succesfully.</b> 
+		<%}else { %>
+			<b><font color="red">The Pharmacy Line could not be created.</font></b> 
+		<%	
+		 }
+		%>
+	
 		<p>
-	
-	
-	
 	
 	<%	
 		}

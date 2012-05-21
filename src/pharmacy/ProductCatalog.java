@@ -27,8 +27,7 @@ public class ProductCatalog {
 	public boolean addItem(Product item){
 		boolean bool;
 		try{
-			this.productsCatalog.add(item);
-			bool = true;
+			bool = this.productsCatalog.add(item);
 		}catch(Exception ex) {
 			System.out.println("Error trying to add an item in the Product Catalog.\n"+ex);
 			bool = false;
