@@ -27,8 +27,7 @@ public class LaboratoryList {
 	public boolean addItem(Laboratory item){
 		boolean bool;
 		try{
-			this.laboratoryList.add(item);
-			bool = true;
+			bool = this.laboratoryList.add(item);
 		}catch(Exception ex) {
 			System.out.println("Error trying to add an item in the Laboratory List.\n"+ex);
 			bool = false;

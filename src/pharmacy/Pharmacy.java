@@ -50,8 +50,7 @@ public class Pharmacy {
 	public boolean addItem(PharmacyLine item){
 		boolean bool;
 		try{
-			this.pharmacyInventory.add(item);
-			bool = true;
+			bool = this.pharmacyInventory.add(item);
 		}catch(Exception ex) {
 			System.out.println("Error trying to add an item in the Pharmacy.\n"+ex);
 			bool = false;

@@ -169,7 +169,8 @@
 					 String sizeOrCount= request.getParameter("sizeOrCount");
 					 String doseForm= request.getParameter("doseForm");
 					 String administrationRoute= request.getParameter("administrationRoute");
-
+					 boolean ok = false;
+					 
 					 try {
 						 	//eliminando el producto anterior
 						 	editProduct = (Product) session.getAttribute("editProduct");
@@ -177,18 +178,27 @@
 
 					   	 	//añadiendo el producto nuevo
 						 	product = new Product(brandName, primaryIngredient, strength, sizeOrCount, doseForm, administrationRoute);	
-						 	productCatalog.addItem(product);
+						 	ok = productCatalog.addItem(product);
 						 	session.setAttribute("productCatalog", productCatalog);
 						}
 					 catch(Exception ex)
 					 {
 						 System.out.println("Error modifying product: " + ex);
+						 ok = false;
 					 }
 					
 
 			%>
 		<p>
+		<%if (ok) { %>
 			<b>The Product was modify succesfully.</b> 
+		<%}else { %>
+			<b><font color="red">The Product could not be modify.</font></b> 
+		<%	
+		 }
+		%>
+
+
 		<p>
 
 
@@ -272,23 +282,32 @@
 					 String sizeOrCount= request.getParameter("sizeOrCount");
 					 String doseForm= request.getParameter("doseForm");
 					 String administrationRoute= request.getParameter("administrationRoute");
+					 boolean ok = false;
 
 					 try {
 
 					   	 	//añadiendo el producto nuevo
 						 	product = new Product(brandName, primaryIngredient, strength, sizeOrCount, doseForm, administrationRoute);	
-						 	productCatalog.addItem(product);
+						 	ok = productCatalog.addItem(product);
 						 	session.setAttribute("productCatalog", productCatalog);
 						}
 					 catch(Exception ex)
 					 {
 						 System.out.println("Error saving the new product: " + ex);
+						 ok = false;
 					 }
 					
 
 			%>
 		<p>
+		<%if (ok) { %>
 			<b>The Product was create succesfully.</b> 
+		<%}else { %>
+			<b><font color="red">The Product could not be created.</font></b> 
+		<%	
+		 }
+		%>
+
 		<p>
 
 			<% //new product
