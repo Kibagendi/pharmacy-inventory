@@ -69,7 +69,7 @@
 		<TR>
 			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
 			<TD><%=pharmacyLine.getLaboratory().getName()%></TD>
-			<TD align="center"><%=pharmacyLine.getBuyPrice().getPrice()%></TD>
+			<TD align="center"><%=pharmacyLine.getPrice().getBuyPrice()%></TD>
 			<TD align="center"><%=pharmacyLine.getCurrentStock()%></TD>
 			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
 			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
