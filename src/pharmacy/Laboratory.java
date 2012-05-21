@@ -8,10 +8,10 @@ public class Laboratory implements Comparable{
 	private String address;
 	private String telephone;
 	
-	private TreeSet<LaboratoryLine> laboratoryCatalog;
+	//private TreeSet<LaboratoryLine> laboratoryCatalog;
 
 	public Laboratory (String name){
-		laboratoryCatalog = new TreeSet<LaboratoryLine>();
+		//laboratoryCatalog = new TreeSet<LaboratoryLine>();
 		this.name = name;
 	}
 	
@@ -67,13 +67,13 @@ public class Laboratory implements Comparable{
 		this.telephone = telephone;
 	}
 
-	public TreeSet<LaboratoryLine> getLaboratoryCatalog() {
+/*	public TreeSet<LaboratoryLine> getLaboratoryCatalog() {
 		return laboratoryCatalog;
 	}
 
 	public void setLaboratoryCatalog(TreeSet<LaboratoryLine> laboratoryCatalog) {
 		this.laboratoryCatalog = laboratoryCatalog;
 	}
-	
+*/	
 	
 }
