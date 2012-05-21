@@ -1,7 +1,7 @@
 <%@ page language="java" 
 	import="pharmacy.Product"
-	import="pharmacy.BillLine"
-	import="pharmacy.Bill"
+	import="pharmacy.ShoppingLine"
+	import="pharmacy.ShoppingCar"
 	import="pharmacy.Price"
 	import="pharmacy.Pharmacy"
 	import="pharmacy.PharmacyLine"
@@ -33,9 +33,9 @@
 			Iterator<PharmacyLine> it = pharmacy.getIterator();
 			String optionName = new String();
 			int optionCode;
-			int billId = pharmacy.numberOfBills() + 1;
-			Bill bill = new Bill("Client 1", billId);
-			pharmacy.addBillItem(bill);
+			int shoppingCarId = pharmacy.numberOfShoppingCars() + 1;
+			ShoppingCar shoppingCar = new ShoppingCar("Client 1", shoppingCarId);
+			pharmacy.addShoppingCarItem(shoppingCar);
 			session.setAttribute("pharmacy", pharmacy);
 	%>
 	<h3>Sell Products:</h3>
@@ -58,10 +58,10 @@
 				<select name="pharmacyLineCode" id="pharmacyLineCode">
 				<%
 					it = pharmacy.getIterator();
-						while (it.hasNext()) {
-							pharmacyLine = it.next();
-							optionName = pharmacyLine.getDescription();
-							optionCode = pharmacyLine.hashCode();
+										while (it.hasNext()) {
+											pharmacyLine = it.next();
+											optionName = pharmacyLine.getDescription();
+											optionCode = pharmacyLine.hashCode();
 				%>	
 						<option value="<%=optionCode%>"><%=optionName%></option>
 				<%
@@ -76,7 +76,7 @@
 		<TR>
 			<TD colspan="2" align="center">
 				<INPUT type=reset value="Reset" />
-				<INPUT type="hidden" name="billId" value="<%=billId%>" />
+				<INPUT type="hidden" name="shoppingCarId" value="<%=shoppingCarId%>" />
 				<INPUT type=submit value="Add to shopping car" /></TD>
 			</TR>
 
@@ -90,25 +90,25 @@
 	<%
 		} else if (request.getParameter("op").equals("add")) {
 
-			int billId = Integer.parseInt(request.getParameter("billId"));
+			int shoppingCarId = Integer.parseInt(request.getParameter("shoppingCarId"));
 			int pharmacyLineCode = Integer.parseInt(request.getParameter("pharmacyLineCode"));
 			int quantity = Integer.parseInt(request
-					.getParameter("quantity"));
+			.getParameter("quantity"));
 			double totalPrice;
 			boolean ok = false;
 
-			Bill bill = pharmacy.getBill(billId-1);
+			ShoppingCar shoppingCar = pharmacy.getShoppingCar(shoppingCarId-1);
 
 			PharmacyLine pharmacyLine = pharmacy.getPharmacyLine(pharmacyLineCode);
 
 			if (pharmacyLine.sellPharmacyLine(quantity)) {
-				
-				totalPrice = quantity * pharmacyLine.getPrice().getSellPrice();
+		
+		totalPrice = quantity * pharmacyLine.getPrice().getSellPrice();
 
-				BillLine billLine = new BillLine(pharmacyLine, quantity, totalPrice);
+		ShoppingLine shoppingLine = new ShoppingLine(pharmacyLine, quantity, totalPrice);
 
-				bill.addItem(billLine);
-				ok = true;
+		shoppingCar.addItem(shoppingLine);
+		ok = true;
 			}
 
 			Iterator<PharmacyLine> it = pharmacy.getIterator();
@@ -117,13 +117,17 @@
 	%>
 	<h3>Selling Products:</h3>
 	<p>
-		<%if (ok) { %>
-			<b>The product was add to the bill.</b> 
-		<%}else { %>
-			<b><font color="red">The product could not be added to the Bill.</font></b> 
-		<%	
-		 }
+		<%
+			if (ok) {
 		%>
+			<b>The product was add to the Shopping Car.</b> 
+		<%
+ 			}else {
+ 		%>
+			<b><font color="red">The product could not be added to the Shopping Car.</font></b> 
+		<%
+ 			}
+ 		%>
 	
 		<p>
 
@@ -131,7 +135,7 @@
 
 	<TABLE align="center" BORDER=2>
 		<TR>
-			<TD colspan="5" align="center"><h2>Bill</h2></TD>
+			<TD colspan="5" align="center"><h2>Shopping Car</h2></TD>
 		</TR>
 
 		<TR>
@@ -142,19 +146,19 @@
 			<TD align="center"><b>Total Price</b></TD>
 		</TR>
 		<%
-			Iterator <BillLine> it_b = bill.getIterator();
-			BillLine billLine;
+			Iterator <ShoppingLine> it_b = shoppingCar.getIterator();
+			ShoppingLine shoppingLine;
 			//PharmacyLine parmacyLine;
 			while (it_b.hasNext()) {
-				billLine = it_b.next();
-				pharmacyLine = billLine.getPharmacyLine();
+				shoppingLine = it_b.next();
+				pharmacyLine = shoppingLine.getPharmacyLine();
 		%>
 		<TR>
 			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
 			<TD><%=pharmacyLine.getLaboratory().getName()%></TD>
 			<TD><%=pharmacyLine.getPrice().getSellPrice()%></TD>
-			<TD><%=billLine.getQuantity()%></TD>
-			<TD><%=billLine.getTotalPrice()%></TD>
+			<TD><%=shoppingLine.getQuantity()%></TD>
+			<TD><%=shoppingLine.getTotalPrice()%></TD>
 		</TR>
 
 				<%

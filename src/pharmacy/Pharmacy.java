@@ -15,12 +15,12 @@ public class Pharmacy {
 	// Un TreeSet mantiene la lista ordenada. 
 	// El elemento a comparar debe contar con métodos equals, hashCode y compareTo.
 	private TreeSet <PharmacyLine> pharmacyInventory;
-	private List <Bill> billList;
+	private List <ShoppingCar> shoppingCarList;
 
 	
 	public Pharmacy(String name, String address){
 		pharmacyInventory = new TreeSet<PharmacyLine>();
-		billList = new ArrayList<Bill>();
+		shoppingCarList = new ArrayList<ShoppingCar>();
 		this.name= name;
 		this.address = address;
 	}
@@ -81,12 +81,12 @@ public class Pharmacy {
 		
 
 	
-	public boolean addBillItem(Bill item){
+	public boolean addShoppingCarItem(ShoppingCar item){
 		boolean bool;
 		try{
-			bool = this.billList.add(item);
+			bool = this.shoppingCarList.add(item);
 		}catch(Exception ex) {
-			System.out.println("Error trying to add a Bill in the Pharmacy.\n"+ex);
+			System.out.println("Error trying to add a ShoppingCar in the Pharmacy.\n"+ex);
 			bool = false;
 		}
 
@@ -94,22 +94,22 @@ public class Pharmacy {
 	}
 
 
-	public boolean removeBillItem(Bill item){
+	public boolean removeShoppingCarItem(ShoppingCar item){
 		boolean bool = false;
 		try{
-			if(this.billList.size()>0){
-				this.billList.remove(item);
+			if(this.shoppingCarList.size()>0){
+				this.shoppingCarList.remove(item);
 				bool = true;
 			}
 		}catch(Exception ex) {
-			System.out.println("Error trying to delete a Bill in the Pharmacy.\n"+ex);
+			System.out.println("Error trying to delete a ShoppingCar in the Pharmacy.\n"+ex);
 			bool = false;
 		}
 		return bool;
 	}
 	
-	public int numberOfBills() {
-		return this.billList.size();
+	public int numberOfShoppingCars() {
+		return this.shoppingCarList.size();
 	}
 
 	public int Size() {
@@ -135,15 +135,15 @@ public class Pharmacy {
 	
 		
 
-	public Bill getBill(int billId) {
-		return billList.get(billId);
+	public ShoppingCar getShoppingCar(int shoppingCarId) {
+		return shoppingCarList.get(shoppingCarId);
 	}
 
-/*	public List<Bill> getBillList() {
+/*	public List<ShoppingCar> getBillList() {
 		return billList;
 	}
 
-	public void setBillList(List<Bill> billList) {
+	public void setBillList(List<ShoppingCar> billList) {
 		this.billList = billList;
 	}
 */

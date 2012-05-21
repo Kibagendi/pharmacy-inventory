@@ -98,12 +98,15 @@ public class PharmacyLine implements Comparable{
 		}
 	}
 	
-	private void requestProduct2Laboratory(){
+	private boolean requestProduct2Laboratory(){
 		int orderQuantity; 
+		boolean bool = false;
 		if (this.maxStock>0 ){
 			orderQuantity = this.maxStock - this.currentStock;
 			request = new Request(orderQuantity);
+			//bool = request.send();
 		}
+		return bool;
 	}
 	public int getMinStock() {
 		return minStock;
