@@ -1,12 +1,12 @@
 package pharmacy;
 
-public class BillLine {
+public class ShoppingLine {
 
 	private PharmacyLine pharmacyLine;
 	private int quantity;
 	private double totalPrice;
 	
-	public BillLine (PharmacyLine pharmacyLine, int quantity, double totalPrice)
+	public ShoppingLine (PharmacyLine pharmacyLine, int quantity, double totalPrice)
 	{
 		this.pharmacyLine = pharmacyLine;
 		this.quantity = quantity;

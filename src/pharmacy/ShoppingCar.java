@@ -4,41 +4,41 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Bill {
+public class ShoppingCar {
 
 	private String client;
 	private int state; //1=open; 2=close; 3=cancel
-	private int billId;
-	private List <BillLine> lines;
+	private int shoppingCarId;
+	private List <ShoppingLine> lines;
 	
-	public Bill(String client, int billId){
-		lines = new ArrayList <BillLine> ();
+	public ShoppingCar(String client, int shoppingCarId){
+		lines = new ArrayList <ShoppingLine> ();
 		this.client = client;
-		this.billId = billId;
-		this.openBill();
+		this.shoppingCarId = shoppingCarId;
+		this.openShoppingCarId();
 	}
 
-	public boolean addItem(BillLine item){
+	public boolean addItem(ShoppingLine item){
 		boolean bool;
 		try{
 			bool = this.lines.add(item);
 		}catch(Exception ex) {
-			System.out.println("Error trying to add an item in the Bill.\n"+ex);
+			System.out.println("Error trying to add an item in the ShoppingCar.\n"+ex);
 			bool = false;
 		}
 
 		return bool;
 	}
 	
-	public void openBill(){
+	public void openShoppingCarId(){
 		this.state= 1;//open
 	}
 
-	public void closeBill(){
+	public void closeShoppingCarId(){
 		this.state= 2;//close
 	}
 
-	public void cancelBill(){
+	public void cancelShoppingCarId(){
 		this.state= 3;//cancel
 	}
 
@@ -46,7 +46,7 @@ public class Bill {
 		return this.state;
 	}
 	
-	public boolean removeItem(BillLine item){
+	public boolean removeItem(ShoppingLine item){
 		boolean bool = false;
 		try{
 			if(this.lines.size()>0){
@@ -54,7 +54,7 @@ public class Bill {
 				bool = true;
 			}
 		}catch(Exception ex) {
-			System.out.println("Error trying to delete an item in the Bill.\n"+ex);
+			System.out.println("Error trying to delete an item in the ShoppingCar.\n"+ex);
 			bool = false;
 		}
 
@@ -70,23 +70,23 @@ public class Bill {
 		this.client = client;
 	}
 
-	public int getBillId() {
-		return billId;
+	public int getShoppingCarId() {
+		return shoppingCarId;
 	}
 
-	public void setBillId(int billId) {
-		this.billId = billId;
+	public void setShoppingCarId(int shoppingCarId) {
+		this.shoppingCarId = shoppingCarId;
 	}
 
-	public List<BillLine> getLines() {
+	public List<ShoppingLine> getLines() {
 		return lines;
 	}
 
-	public void setLines(List<BillLine> lines) {
+	public void setLines(List<ShoppingLine> lines) {
 		this.lines = lines;
 	}
 	
-	public Iterator<BillLine> getIterator(){
+	public Iterator<ShoppingLine> getIterator(){
 		return this.lines.iterator();
 
 	}

@@ -13,9 +13,6 @@ public class Product implements Comparable{
 	/*
 	 * Constructors
 	 */
-	public Product() {
-	}
-
 	public Product(String name, String strength, String sizeOrCount) {
 		this.brandName = name;
 		this.strength = strength;
