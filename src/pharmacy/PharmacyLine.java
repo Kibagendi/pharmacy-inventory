@@ -10,23 +10,23 @@ public class PharmacyLine implements Comparable{
 	private Product product;
 	private Laboratory laboratory;
 	//private LaboratoryLine laboratoryLine;
-	private Price buyPrice;
+	private Price price;
 	private Request request;
 
-	public PharmacyLine(Product product, Laboratory laboratory, Price buyPrice, int currentStock){
+	public PharmacyLine(Product product, Laboratory laboratory, Price price, int currentStock){
 		this.product= product;
 		this.laboratory = laboratory;
-		this.buyPrice = buyPrice;
+		this.price = price;
 		this.currentStock = currentStock;
 		this.minStock =-1;
 		this.maxStock =-1;
 
 	}
 	
-	public PharmacyLine(Product product, Laboratory laboratory, Price buyPrice, int currentStock,int minStock, int maxStock, String location){
+	public PharmacyLine(Product product, Laboratory laboratory, Price price, int currentStock,int minStock, int maxStock, String location){
 		this.product= product;
 		this.laboratory = laboratory;
-		this.buyPrice = buyPrice;
+		this.price = price;
 		this.currentStock = currentStock;
 		this.minStock =minStock;
 		this.maxStock =maxStock;
@@ -64,6 +64,9 @@ public class PharmacyLine implements Comparable{
 		return( thisProduct.compareTo( objectProduct ) + thisLaboratory.compareTo( objectLaboratory ));
 	}
 
+	public String getDescription(){
+		return this.product.getBrandName() +" - "+ this.laboratory.getName() +" - "+ this.price.getSellPrice() +"$"; 
+	}
 	public String getLocation() {
 		return location == null ? " " : location;
 		}
@@ -76,10 +79,32 @@ public class PharmacyLine implements Comparable{
 		return currentStock;
 	}
 
-	public void setCurrentStock(int currentStock) {
-		this.currentStock = currentStock;
+	public boolean sellPharmacyLine(int quantity) {
+		boolean bool = false;
+		if (quantity < this.currentStock){
+			this.currentStock = this.currentStock - quantity;
+			bool= true;
+			watcher();
+		}
+
+		return bool;
 	}
 
+	private void watcher(){
+		
+		if (this.currentStock< this.minStock)
+		{
+			requestProduct2Laboratory();
+		}
+	}
+	
+	private void requestProduct2Laboratory(){
+		int orderQuantity; 
+		if (this.maxStock>0 ){
+			orderQuantity = this.maxStock - this.currentStock;
+			request = new Request(orderQuantity);
+		}
+	}
 	public int getMinStock() {
 		return minStock;
 	}
@@ -112,12 +137,12 @@ public class PharmacyLine implements Comparable{
 		this.laboratory = laboratory;
 	}
 
-	public Price getBuyPrice() {
-		return buyPrice;
+	public Price getPrice() {
+		return price;
 	}
 
-	public void setBuyPrice(Price buyPrice) {
-		this.buyPrice = buyPrice;
+	public void setPrice(Price price) {
+		this.price = price;
 	}
 
 	public Request getRequest() {

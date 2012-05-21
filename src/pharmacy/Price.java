@@ -1,18 +1,30 @@
 package pharmacy;
 
 public class Price {
-	private double price;
+	private double buyPrice;
+	private double sellPrice;
+	private static double profit = 1.30;
 	
-	public Price (double price){
-		this.price = price;
+	public Price (double buyPrice){
+		this.buyPrice = buyPrice;
+		this.sellPrice = buyPrice * profit;
 	}
 
-	public double getPrice() {
-		return this.price;
+	public double getBuyPrice() {
+		return buyPrice;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setBuyPrice(double buyPrice) {
+		this.buyPrice = buyPrice;
 	}
+
+	public double getSellPrice() {
+		return sellPrice;
+	}
+
+	public void setSellPrice(double sellPrice) {
+		this.sellPrice = sellPrice;
+	}
+
 	
 }

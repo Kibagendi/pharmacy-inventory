@@ -86,6 +86,8 @@
 	<p>
 	<p><a href="jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory</a>
 	<p>
+	<p><a href="jsp/seller.jsp?op=start">Sell products</a>
+	<p>
 
 </body>
 </html>
