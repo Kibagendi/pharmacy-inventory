@@ -2,7 +2,7 @@ package pharmacy;
 
 import java.util.TreeSet;
 
-public class Laboratory {
+public class Laboratory implements Comparable{
 
 	private String name;
 	private String address;
@@ -14,6 +14,34 @@ public class Laboratory {
 		laboratoryCatalog = new TreeSet<LaboratoryLine>();
 		this.name = name;
 	}
+	
+	public boolean equals( Object object ) {
+		// Indica en base a que atributos se iguala el objeto 
+		if (object == null) return false; 
+		Laboratory laboratory = (Laboratory)object; 
+		if (this.getName().equals(laboratory.getName()) ) return true; 
+
+		return false;
+	} 
+
+	public int hashCode() {
+		// retorna un identificador unico del objeto. 
+		return this.getName().hashCode();
+	} 
+
+	public int compareTo( Object object ) {
+		// Indica en base a que atributos se compara el objeto 
+		// Devuelve +1 si this es > que objeto 
+		// Devuelve -1 si this es < que objeto 
+		// Devuelve 0 si son iguales 
+
+		Laboratory laboratory = (Laboratory)object; 
+		String objectName = laboratory.getName().toLowerCase(); 
+		String thisName = this.getName().toLowerCase(); 
+
+		return( thisName.compareTo( objectName ) );
+	}
+
 	
 	public String getName() {
 		return name == null ? " " : name;
