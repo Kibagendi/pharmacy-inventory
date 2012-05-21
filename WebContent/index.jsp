@@ -4,6 +4,7 @@
 	import="pharmacy.PharmacyLine"
 	import="pharmacy.Laboratory"
 	import="pharmacy.LaboratoryLine"
+	import="pharmacy.LaboratoryList"
 	import="pharmacy.Price"
 	import="pharmacy.ProductCatalog"
 	
@@ -18,6 +19,7 @@
 		//Loading some basic data to work
 		
 		ProductCatalog productCatalog =  new ProductCatalog();
+		LaboratoryList laboratoryList = new LaboratoryList();
 
 		pharmacy = new Pharmacy("Farmacia Don Ramon","Calle 8");
 		
@@ -25,6 +27,11 @@
 		Laboratory lab1 = new Laboratory("Bayer");	
 		Laboratory lab2 = new Laboratory("Menarini S.A.");	
 		Laboratory lab3 = new Laboratory("Roche");	
+
+		//Loading some basic products
+		laboratoryList.addItem(lab1);
+		laboratoryList.addItem(lab2);
+		laboratoryList.addItem(lab3);
 		
 		//Creating some Products
 		Product product1 = new Product("Aspirin 325mg x 30 Tablets", "Acetylsalicylic Acid", "325 mg", "30", "Tablet", "Oral");
@@ -56,6 +63,7 @@
 		
 		session.setAttribute("pharmacy",pharmacy);
 		session.setAttribute("productCatalog",productCatalog);
+		session.setAttribute("laboratoryList",laboratoryList);
 	}
 	else
 	{
@@ -76,7 +84,7 @@
 	<BR>
 	<p><a href="jsp/products.jsp?op=list">Products Catalog</a>
 	<p>
-	<p><a href="jsp/pharmacyLines.jsp?op=list">Pharmacy Inventory</a>
+	<p><a href="jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory</a>
 	<p>
 
 </body>

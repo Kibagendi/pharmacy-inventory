@@ -38,14 +38,14 @@ public class PharmacyLine implements Comparable{
 		// Indica en base a que atributos se iguala el objeto 
 		if (object == null) return false; 
 		PharmacyLine pharmacyLine = (PharmacyLine)object; 
-		if (this.getProduct().equals(pharmacyLine.getProduct()) ) return true; 
+		if (this.getProduct().equals(pharmacyLine.getProduct()) && this.getLaboratory().equals(pharmacyLine.getLaboratory())) return true; 
 
 		return false;
 	} 
 
 	public int hashCode() {
 		// retorna un identificador unico del objeto. 
-		return this.getProduct().hashCode();
+		return (this.getProduct().getBrandName() + this.getLaboratory().getName()).hashCode();
 	} 
 
 	public int compareTo( Object object ) {
@@ -58,7 +58,10 @@ public class PharmacyLine implements Comparable{
 		Product objectProduct = pharmacyLine.getProduct(); 
 		Product thisProduct = this.getProduct(); 
 
-		return( thisProduct.compareTo( objectProduct ) );
+		Laboratory objectLaboratory = pharmacyLine.getLaboratory(); 
+		Laboratory thisLaboratory = this.getLaboratory(); 
+
+		return( thisProduct.compareTo( objectProduct ) + thisLaboratory.compareTo( objectLaboratory ));
 	}
 
 	public String getLocation() {
