@@ -309,38 +309,9 @@
 		%>
 
 		<p>
-
-			<% //new product
-				} 
-				else if (request.getParameter("op").equals("new")) {
-			%>
-		
-		<FORM method="post" action="../jsp/products.jsp?op=new">
-			<TABLE align="center" border="1" width="75%">
-
-				<TR>
-					<TD>New Product Category:</TD>
-					<TD><input name="productCategoryName" size="50"></TD>
-				</TR>
-
-				<TR>
-					<TD>Price :</TD>
-					<TD><Input name="price"></TD>
-				</TR>
-
-
-				<TR>
-					<TD><INPUT type=reset value="Reset" /></TD>
-					<TD><INPUT type=submit value="Submit" /></TD>
-				</TR>
-
-			</TABLE>
-		</FORM>
-
-
-		<%
-			}
-		%>
+	<%
+	 }
+	%>
 		<p>
 			<a href="../jsp/products.jsp?op=list">List of Products</a>
 		<p>

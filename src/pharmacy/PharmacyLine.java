@@ -1,5 +1,7 @@
 package pharmacy;
 
+import java.text.DecimalFormat;
+
 public class PharmacyLine implements Comparable{
 
 	private String location;
@@ -12,7 +14,17 @@ public class PharmacyLine implements Comparable{
 	//private LaboratoryLine laboratoryLine;
 	private Price price;
 	private Request request;
+	private DecimalFormat twoDec = new DecimalFormat("0.00");
 
+	public PharmacyLine(PharmacyLine pharmacyLine){
+		this.product=  pharmacyLine.getProduct();
+		this.laboratory = pharmacyLine.getLaboratory();
+		this.price = pharmacyLine.getPrice();
+		this.currentStock = pharmacyLine.getCurrentStock();
+		this.minStock = pharmacyLine.getMinStock();
+		this.maxStock = pharmacyLine.getMaxStock();
+		this.location = pharmacyLine.getLocation();
+	}
 	public PharmacyLine(Product product, Laboratory laboratory, Price price, int currentStock){
 		this.product= product;
 		this.laboratory = laboratory;
@@ -65,7 +77,7 @@ public class PharmacyLine implements Comparable{
 	}
 
 	public String getDescription(){
-		return this.product.getBrandName() +" - "+ this.laboratory.getName() +" - "+ this.price.getSellPrice() +"$"; 
+		return this.product.getBrandName() +" - "+ this.laboratory.getName() +" - "+ twoDec.format(this.price.getSellPrice()) +" EUR"; 
 	}
 	public String getLocation() {
 		return location == null ? " " : location;
@@ -79,9 +91,9 @@ public class PharmacyLine implements Comparable{
 		return currentStock;
 	}
 
-	public boolean sellPharmacyLine(int quantity) {
+	public boolean takeOutPharmacyLine(int quantity) {
 		boolean bool = false;
-		if (quantity < this.currentStock){
+		if (quantity <= this.currentStock && quantity >0){
 			this.currentStock = this.currentStock - quantity;
 			bool= true;
 			watcher();
@@ -90,6 +102,24 @@ public class PharmacyLine implements Comparable{
 		return bool;
 	}
 
+
+	public boolean putInPharmacyLine(int quantity) {
+		boolean bool = false;
+		if (quantity >0)
+			if(this.maxStock<0)//-1=infinity
+			{
+				this.currentStock = this.currentStock + quantity;
+				bool= true;
+			}
+			else if ((quantity + this.currentStock) <= this.maxStock ){//si la cantidad no supera el inventario maximo
+				this.currentStock = this.currentStock + quantity;
+				bool= true;
+			}
+
+		return bool;
+	}
+
+	
 	private void watcher(){
 		
 		if (this.currentStock< this.minStock)

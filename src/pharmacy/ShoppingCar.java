@@ -1,27 +1,32 @@
 package pharmacy;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 public class ShoppingCar {
 
 	private String client;
 	private int state; //1=open; 2=close; 3=cancel
 	private int shoppingCarId;
-	private List <ShoppingLine> lines;
+	private HashMap<String, ShoppingLine>  lines;
 	
 	public ShoppingCar(String client, int shoppingCarId){
-		lines = new ArrayList <ShoppingLine> ();
+		lines = new HashMap <String, ShoppingLine>();
 		this.client = client;
 		this.shoppingCarId = shoppingCarId;
-		this.openShoppingCarId();
+		this.openShoppingCar();
 	}
 
-	public boolean addItem(ShoppingLine item){
-		boolean bool;
+	public boolean addItem(String lineKey, ShoppingLine item){
+		boolean bool = false;
 		try{
-			bool = this.lines.add(item);
+			if (!this.lines.containsKey(lineKey)){
+				this.lines.put(lineKey, item);
+				bool = true;
+				//System.out.println("put-shoopinglineKey:"+lineKey);
+				//System.out.println("put-ProductName:"+item.getPharmacyLine().getProduct().getBrandName());
+			}
 		}catch(Exception ex) {
 			System.out.println("Error trying to add an item in the ShoppingCar.\n"+ex);
 			bool = false;
@@ -29,16 +34,24 @@ public class ShoppingCar {
 
 		return bool;
 	}
+
 	
-	public void openShoppingCarId(){
+	public ShoppingLine getItem(String lineKey){
+		ShoppingLine sl = lines.get(lineKey);
+		//System.out.println("get-shoopinglineKey:"+lineKey);
+		//System.out.println("get-ProductName:"+sl.getPharmacyLine().getProduct().getBrandName());
+		return sl;
+	}
+
+	public void openShoppingCar(){
 		this.state= 1;//open
 	}
 
-	public void closeShoppingCarId(){
+	public void closeShoppingCar(){
 		this.state= 2;//close
 	}
 
-	public void cancelShoppingCarId(){
+	public void cancelShoppingCar(){
 		this.state= 3;//cancel
 	}
 
@@ -46,19 +59,8 @@ public class ShoppingCar {
 		return this.state;
 	}
 	
-	public boolean removeItem(ShoppingLine item){
-		boolean bool = false;
-		try{
-			if(this.lines.size()>0){
-				this.lines.remove(item);
-				bool = true;
-			}
-		}catch(Exception ex) {
-			System.out.println("Error trying to delete an item in the ShoppingCar.\n"+ex);
-			bool = false;
-		}
-
-		return bool;
+	public boolean removeItem(String lineKey){
+		return (null!=this.lines.remove(lineKey));
 	}
 
 	
@@ -78,17 +80,29 @@ public class ShoppingCar {
 		this.shoppingCarId = shoppingCarId;
 	}
 
-	public List<ShoppingLine> getLines() {
+	public HashMap <String, ShoppingLine> getLines() {
 		return lines;
 	}
 
-	public void setLines(List<ShoppingLine> lines) {
+	public void setLines(HashMap <String, ShoppingLine> lines) {
 		this.lines = lines;
 	}
 	
-	public Iterator<ShoppingLine> getIterator(){
-		return this.lines.iterator();
+	public Iterator <String> getIterator(){
+		Collection<String> c = this.lines.keySet();
+		return c.iterator();
+	}
 
+	public double getTotalPrice() {
+		double totalPrice = 0;
+		Collection<ShoppingLine> c = this.lines.values();
+		Iterator <ShoppingLine> it = c.iterator();
+		
+		while (it.hasNext())
+		{
+			totalPrice= it.next().getTotalPrice() + totalPrice;
+		}
+		return totalPrice;
 	}
 
 }
