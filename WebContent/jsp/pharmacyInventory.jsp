@@ -7,12 +7,14 @@
 	import="pharmacy.Laboratory"
 	import="pharmacy.ProductCatalog"
 	import="java.util.Iterator"
+	import="java.text.DecimalFormat"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	ProductCatalog productCatalog = (ProductCatalog) session.getAttribute("productCatalog");
 	Pharmacy pharmacy = (Pharmacy) session.getAttribute("pharmacy");
 	LaboratoryList laboratoryList = (LaboratoryList) session.getAttribute("laboratoryList");
+	DecimalFormat twoDec = new DecimalFormat("0.00");
 
 %>
 
@@ -46,7 +48,7 @@
 	
 	<TABLE align="center" BORDER=2>
 		<TR>
-			<TD colspan="10" align="center"><h2>Pharmacy lines</h2></TD>
+			<TD colspan="9" align="center"><h2>Pharmacy lines</h2></TD>
 		</TR>
 
 		<TR>
@@ -57,7 +59,6 @@
 			<TD align="center"><b>Min Stock</b></TD>
 			<TD align="center"><b>Max Stock</b></TD>
 			<TD align="center"><b>Location</b></TD>
-			<TD align="center"><b>Sell Product</b></TD>
 			<TD align="center"><b>Edit Line</b></TD>
 			<TD align="center"><b>Delete Line</b></TD>
 		</TR>
@@ -69,12 +70,11 @@
 		<TR>
 			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
 			<TD><%=pharmacyLine.getLaboratory().getName()%></TD>
-			<TD align="center"><%=pharmacyLine.getPrice().getBuyPrice()%></TD>
+			<TD align="center"><%=twoDec.format(pharmacyLine.getPrice().getBuyPrice())%> EUR </TD>
 			<TD align="center"><%=pharmacyLine.getCurrentStock()%></TD>
 			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
 			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
 			<TD align="center"><%=pharmacyLine.getLocation()%></TD>
-			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=sell&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">Sell</a></TD>
 			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=edit&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">Edit</a></TD>
 			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=delete&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">X</a></TD>
 		</TR>
@@ -187,11 +187,20 @@
 					
 					 int productCode= Integer.parseInt(request.getParameter("productCode"));
 					 int laboratoryCode= Integer.parseInt(request.getParameter("laboratoryCode"));
-					 int currentStock=  Integer.parseInt(request.getParameter("currentStock"));
-					 int minStock=  Integer.parseInt(request.getParameter("minStock"));
-					 int maxStock=  Integer.parseInt(request.getParameter("maxStock"));
-					 String location= request.getParameter("location");
-					 double buyPrice=  Double.valueOf(request.getParameter("buyPrice"));
+					 int currentStock = 0, minStock =-1, maxStock =-1;
+					 double buyPrice =0 ;
+					 String location = request.getParameter("location");//location= "";
+					 
+					 //if(!request.getParameter("location").isEmpty())
+					//	 location = request.getParameter("location");
+					 if(!request.getParameter("currentStock").isEmpty())
+					 	currentStock = Integer.parseInt(request.getParameter("currentStock"));
+					 if(!request.getParameter("minStock").isEmpty())
+					 	minStock = Integer.parseInt(request.getParameter("minStock"));
+					 if(!request.getParameter("maxStock").isEmpty())
+					 	maxStock = Integer.parseInt(request.getParameter("maxStock"));
+					 if(!request.getParameter("buyPrice").isEmpty())
+					 	buyPrice =  Double.valueOf(request.getParameter("buyPrice"));
 					 
 					 boolean ok= false;
 					 
