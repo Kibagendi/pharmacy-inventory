@@ -27,16 +27,24 @@
 	<p>
 
 	<%
-		if (request.getParameter("op").equals("start")) {
+		if (request.getParameter("op").equals("start") || request.getParameter("op").equals("continue")) {
 
 			PharmacyLine pharmacyLine = null;
+			ShoppingCar shoppingCar = null;
 			Iterator<PharmacyLine> it = pharmacy.getIterator();
 			String optionName = new String();
 			int optionCode;
-			int shoppingCarId = pharmacy.numberOfShoppingCars() + 1;
-			ShoppingCar shoppingCar = new ShoppingCar("Client 1", shoppingCarId);
-			pharmacy.addShoppingCarItem(shoppingCar);
-			session.setAttribute("pharmacy", pharmacy);
+			int shoppingCarId;
+			
+			if(request.getParameter("op").equals("start") ){
+				shoppingCarId = pharmacy.numberOfShoppingCars() + 1;
+				shoppingCar = new ShoppingCar("Client 1", shoppingCarId);
+				pharmacy.addShoppingCarItem(shoppingCar);
+				session.setAttribute("pharmacy", pharmacy);
+			}
+			else{//continue
+				shoppingCarId = Integer.parseInt(request.getParameter("shoppingCarId"));
+			}
 	%>
 	<h3>Sell Products:</h3>
 	<p>
@@ -92,8 +100,8 @@
 
 			int shoppingCarId = Integer.parseInt(request.getParameter("shoppingCarId"));
 			int pharmacyLineCode = Integer.parseInt(request.getParameter("pharmacyLineCode"));
-			int quantity = Integer.parseInt(request
-			.getParameter("quantity"));
+			int quantity = Integer.parseInt(request.getParameter("quantity"));
+			String shoppingLineKey = request.getParameter("pharmacyLineCode") +request.getParameter("quantity");
 			double totalPrice;
 			boolean ok = false;
 
@@ -103,17 +111,15 @@
 
 			if (pharmacyLine.sellPharmacyLine(quantity)) {
 		
-		totalPrice = quantity * pharmacyLine.getPrice().getSellPrice();
+				totalPrice = quantity * pharmacyLine.getPrice().getSellPrice();
 
-		ShoppingLine shoppingLine = new ShoppingLine(pharmacyLine, quantity, totalPrice);
+				//ShoppingLine shoppingLine = new ShoppingLine(pharmacyLine, quantity, totalPrice);
 
-		shoppingCar.addItem(shoppingLine);
-		ok = true;
+				ok = shoppingCar.addItem(shoppingLineKey, new ShoppingLine(pharmacyLine, quantity, totalPrice));
+				
+				session.setAttribute("pharmacy", pharmacy);
+				
 			}
-
-			Iterator<PharmacyLine> it = pharmacy.getIterator();
-			String optionName = new String();
-			int optionCode;
 	%>
 	<h3>Selling Products:</h3>
 	<p>
@@ -135,7 +141,7 @@
 
 	<TABLE align="center" BORDER=2>
 		<TR>
-			<TD colspan="5" align="center"><h2>Shopping Car</h2></TD>
+			<TD colspan="6" align="center"><h2>Shopping Car</h2></TD>
 		</TR>
 
 		<TR>
@@ -144,21 +150,29 @@
 			<TD align="center"><b>Quantity</b></TD>
 			<TD align="center"><b>Unit Price</b></TD>
 			<TD align="center"><b>Total Price</b></TD>
+			<TD align="center"><b>Delete</b></TD>
 		</TR>
 		<%
-			Iterator <ShoppingLine> it_b = shoppingCar.getIterator();
-			ShoppingLine shoppingLine;
+			Iterator <String> it_sc = shoppingCar.getIterator();
+			//ShoppingLine shoppingLine;
+			String shoppingLinekey;
+			//PharmacyLine pharmacyLine;
 			//PharmacyLine parmacyLine;
-			while (it_b.hasNext()) {
-				shoppingLine = it_b.next();
-				pharmacyLine = shoppingLine.getPharmacyLine();
+			while (it_sc.hasNext()) {
+				shoppingLinekey = it_sc.next();
+				//System.out.println("it-shoppingLinekey:"+shoppingLinekey);
+				ShoppingLine shoppingLine = shoppingCar.getItem(shoppingLinekey);
+				//System.out.println("shoppingLine:"+shoppingLine.hashCode());
+				PharmacyLine pharmacyLineAdd = shoppingLine.getPharmacyLine();
+				//System.out.println("pharmacyLine:"+pharmacyLineAdd.hashCode());
 		%>
 		<TR>
-			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
-			<TD><%=pharmacyLine.getLaboratory().getName()%></TD>
-			<TD><%=pharmacyLine.getPrice().getSellPrice()%></TD>
-			<TD><%=shoppingLine.getQuantity()%></TD>
-			<TD><%=shoppingLine.getTotalPrice()%></TD>
+			<TD><%=pharmacyLineAdd.getProduct().getBrandName()%></TD>
+			<TD><%=pharmacyLineAdd.getLaboratory().getName()%></TD>
+			<TD align="center"><%=pharmacyLineAdd.getPrice().getSellPrice()%></TD>
+			<TD align="center"><%=shoppingLine.getQuantity()%></TD>
+			<TD align="center"><%=shoppingLine.getTotalPrice()%></TD>
+			<TD align="center"><a href="../jsp/seller.jsp?op=delete&shoopingLineKey=<%=shoppingLinekey%>">X</a></TD>			
 		</TR>
 
 				<%
@@ -166,8 +180,10 @@
 				%>	
 
 		<TR>
-			<TD colspan="5" align="center">
-				<INPUT type=submit value="continue shopping" /></TD>
+			<TD colspan="6" align="center">
+				<INPUT type=submit value="continue shopping" />
+				<INPUT type="hidden" name="shoppingCarId" value="<%=shoppingCar.getShoppingCarId()%>" />
+			</TD>
 			</TR>
 
 	</TABLE>
