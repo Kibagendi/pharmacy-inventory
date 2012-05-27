@@ -16,15 +16,6 @@ public class PharmacyLine implements Comparable{
 	private Boolean isRequested;
 	private DecimalFormat twoDec = new DecimalFormat("0.00");
 
-/*	public PharmacyLine(PharmacyLine pharmacyLine){
-		this.product=  pharmacyLine.getProduct();
-		this.laboratory = pharmacyLine.getLaboratory();
-		this.price = pharmacyLine.getPrice();
-		this.currentStock = pharmacyLine.getCurrentStock();
-		this.minStock = pharmacyLine.getMinStock();
-		this.maxStock = pharmacyLine.getMaxStock();
-		this.location = pharmacyLine.getLocation();
-	}*/
 	public PharmacyLine(Product product, Laboratory laboratory, Price price, int currentStock){
 		this.product= product;
 		this.laboratory = laboratory;
@@ -97,7 +88,7 @@ public class PharmacyLine implements Comparable{
 		if (quantity <= this.currentStock && quantity >0){
 			this.currentStock = this.currentStock - quantity;
 			bool= true;
-			watcher();
+			//watcher();
 		}
 
 		return bool;
@@ -121,7 +112,7 @@ public class PharmacyLine implements Comparable{
 	}
 
 	
-	private void watcher(){
+	public void watcher(){
 		
 		if (this.currentStock< this.minStock)
 		{

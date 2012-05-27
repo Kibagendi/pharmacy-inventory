@@ -16,12 +16,14 @@
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	ProductCatalog productCatalog = (ProductCatalog) session.getAttribute("productCatalog");
-	Pharmacy pharmacy = (Pharmacy) session.getAttribute("pharmacy");
-	LaboratoryList laboratoryList = (LaboratoryList) session.getAttribute("laboratoryList");
+	//Singleton objects declaration
+	Pharmacy pharmacy = Pharmacy.getInstance();
+	ProductCatalog productCatalog =  ProductCatalog.getInstance();
+	LaboratoryList laboratoryList = LaboratoryList.getInstance();
+
+
 	DecimalFormat twoDec = new DecimalFormat("0.00");
 	DateFormat df = new SimpleDateFormat ("yyyyMMddHHmmss");
-	//ShoppingCar shoppingCar = null;
 %>
 
 <html>
@@ -48,7 +50,6 @@
 				shoppingCarId = pharmacy.numberOfShoppingCars() + 1;
 				shoppingCar = new ShoppingCar("Client x", shoppingCarId);
 				pharmacy.addShoppingCarItem(shoppingCar);
-				session.setAttribute("pharmacy", pharmacy);
 			}
 			else{//continue
 				shoppingCarId = Integer.parseInt(request.getParameter("shoppingCarId"));
@@ -126,17 +127,7 @@
 		} else if (request.getParameter("op").equals("cancel")) {
 			int shoppingCarId = Integer.parseInt(request.getParameter("shoppingCarId"));
 			ShoppingCar shoppingCar = pharmacy.getShoppingCar(shoppingCarId-1);
-			Iterator <String> it = shoppingCar.getIterator();
-			
-			while (it.hasNext()){
-				String shoppingLineKey = it.next();
-				ShoppingLine shoppingLine = shoppingCar.getItem(shoppingLineKey);
-				int quantity = shoppingLine.getQuantity();
-				shoppingLine.getPharmacyLine().putInPharmacyLine(quantity);
-			}
-			
-			pharmacy.removeShoppingCarItem(shoppingCar);		
-			session.setAttribute("pharmacy", pharmacy);
+			shoppingCar.cancelShoppingCar();
 					
 	%>
 
@@ -152,8 +143,6 @@
 			int shoppingCarId = Integer.parseInt(request.getParameter("shoppingCarId"));
 			ShoppingCar shoppingCar = pharmacy.getShoppingCar(shoppingCarId-1);
 			shoppingCar.closeShoppingCar();
-			session.setAttribute("pharmacy", pharmacy);
-					
 	%>
 
 	<h3>Finishing Shopping:</h3>
@@ -186,9 +175,6 @@
 					totalPrice = quantity * pharmacyLine.getPrice().getSellPrice();
 	
 					ok = shoppingCar.addItem(shoppingLineKey, new ShoppingLine(pharmacyLine, quantity, totalPrice));
-					
-					session.setAttribute("pharmacy", pharmacy);
-					
 				}
 	%>
 	<h3>Selling Products:</h3>
@@ -211,9 +197,6 @@
 			if (pharmacyLine.putInPharmacyLine(shoppingCar.getItem(shoppingLineKey).getQuantity())) {
 				
 				ok = shoppingCar.removeItem(shoppingLineKey);
-				
-				session.setAttribute("pharmacy", pharmacy);
-				
 			}
 		%>
 	<h3>Selling Products:</h3>
