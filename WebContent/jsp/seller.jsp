@@ -66,11 +66,7 @@
 		</TR>
 
 		<TR>
-			<TD align="center"><b>Pharmacy Line</b></TD>
-			<TD align="center"><b>Quantity</b></TD>
-		</TR>
-
-		<TR>
+			<TD align="center"><b>Pharmacy Line:</b></TD>
 			<TD>
 				<select name="pharmacyLineCode" id="pharmacyLineCode">
 				<%
@@ -87,6 +83,10 @@
 				</select> 
 
 			</TD>
+		</TR>
+		<TR>
+			<TD align="center"><b>Quantity:</b></TD>
+		
 			<TD><input type="text" name="quantity" /></TD>
 		</TR>
 

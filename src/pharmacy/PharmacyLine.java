@@ -80,7 +80,7 @@ public class PharmacyLine implements Comparable{
 	}
 
 	public int getCurrentStock() {
-		return currentStock;
+		return this.currentStock;
 	}
 
 	public boolean takeOutPharmacyLine(int quantity) {
@@ -88,7 +88,6 @@ public class PharmacyLine implements Comparable{
 		if (quantity <= this.currentStock && quantity >0){
 			this.currentStock = this.currentStock - quantity;
 			bool= true;
-			//watcher();
 		}
 
 		return bool;
@@ -114,13 +113,13 @@ public class PharmacyLine implements Comparable{
 	
 	public void watcher(){
 		
-		if (this.currentStock< this.minStock)
+		if (this.currentStock<= this.minStock && !isRequested)
 		{
 			requestProduct();
 		}
 	}
 	
-	public Request requestProduct(){
+	private Request requestProduct(){
 		int orderQuantity;
 		Pharmacy pharmacy = Pharmacy.getInstance();
 		
@@ -135,18 +134,20 @@ public class PharmacyLine implements Comparable{
 		return request;
 	}
 
-	public boolean recieveProduct(int quantity){
+	public boolean recieveProduct(int quantity, double buyPrice){
 		 
-		boolean bool = false;
-		if (this.maxStock>0 ){
-			quantity = this.maxStock - this.currentStock;
+		boolean bool = this.putInPharmacyLine(quantity);
+		
+		if (bool){
+			this.price.setBuyPrice(buyPrice);
 			this.isRequested = false;
+			watcher();//check if the inventory is enough 
 		}
-		return bool;
+		return  bool;
 	}
 	
 	public int getMinStock() {
-		return minStock;
+		return this.minStock;
 	}
 	
 	public void setMinStock(int minStock) {
@@ -154,7 +155,7 @@ public class PharmacyLine implements Comparable{
 	}
 
 	public int getMaxStock() {
-		return maxStock;
+		return this.maxStock;
 	}
 
 	public void setMaxStock(int maxStock) {
@@ -184,14 +185,6 @@ public class PharmacyLine implements Comparable{
 	public void setPrice(Price price) {
 		this.price = price;
 	}
-
-/*	public Request getRequest() {
-		return request;
-	}
-
-	public void setRequest(Request request) {
-		this.request = request;
-	}*/
 
 
 }

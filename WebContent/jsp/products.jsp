@@ -109,17 +109,17 @@
 					VALUE="<%=product.getPrimaryIngredient()%>"></TD>
 			</TR>
 			<TR>
-				<TD><b>Strength</b></TD>
+				<TD><b>Strength:</b></TD>
 				<TD><INPUT TYPE=TEXT NAME=strength SIZE=20
 					VALUE="<%=product.getStrength()%>"></TD>
 			</TR>
 			<TR>
-				<TD><b>Size/Count</b></TD>
+				<TD><b>Size/Count:</b></TD>
 				<TD><INPUT TYPE=TEXT NAME=sizeOrCount SIZE=20
 					VALUE="<%=product.getSizeOrCount()%>"></TD>
 			</TR>
 			<TR>
-				<TD><b>Dose Form</b></TD>
+				<TD><b>Dose Form:</b></TD>
 				<TD>
 				<select name="doseForm" id="doseForm">
 						<option value=" ">Other</option>
@@ -135,7 +135,7 @@
  					</TD>
 			</TR>
 			<TR>
-				<TD><b>Administration Route</b></TD>
+				<TD><b>Administration Route:</b></TD>
 				<TD>
 				<select name="administrationRoute" id="administrationRoute">
 						<option value=" ">Other</option>

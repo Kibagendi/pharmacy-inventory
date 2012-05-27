@@ -16,9 +16,6 @@
 	ProductCatalog productCatalog =  ProductCatalog.getInstance();
 	LaboratoryList laboratoryList = LaboratoryList.getInstance();
 
-	//ProductCatalog productCatalog = (ProductCatalog) session.getAttribute("productCatalog");
-	//Pharmacy pharmacy = (Pharmacy) session.getAttribute("pharmacy");
-	//LaboratoryList laboratoryList = (LaboratoryList) session.getAttribute("laboratoryList");
 	DecimalFormat twoDec = new DecimalFormat("0.00");
 
 %>
@@ -78,7 +75,7 @@
 			<TD align="center"><%=twoDec.format(pharmacyLine.getPrice().getBuyPrice())%> EUR </TD>
 			<TD align="center"><%=pharmacyLine.getCurrentStock()%></TD>
 			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
-			<TD align="center"><%=pharmacyLine.getMinStock()%></TD>
+			<TD align="center"><%=pharmacyLine.getMaxStock()%></TD>
 			<TD align="center"><%=pharmacyLine.getLocation()%></TD>
 			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=edit&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">Edit</a></TD>
 			<TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=delete&pharmacyLineCode=<%=pharmacyLine.hashCode()%>">X</a></TD>
