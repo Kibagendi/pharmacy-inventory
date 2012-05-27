@@ -4,25 +4,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Request {
+public class Receipt {
 	
 	private int quantity;
-	private Date requestDate;
+	private Date receiptDate;
 	private DateFormat df = new SimpleDateFormat ("yyyy-M-dd HH:mm:ss");
 	private Laboratory laboratory;
 	private PharmacyLine pharmacyLine;
 	
-	public Request(PharmacyLine pharmacyLine, int quantity){
+	public Receipt(PharmacyLine pharmacyLine, int quantity){
 		this.quantity = quantity;
-		this.requestDate = new Date();
+		this.receiptDate = new Date();
 	}
 	
 	public String getRequestDateString(){
-		return df.format(requestDate);
+		return df.format(receiptDate);
 	}
 
 	public Date getRequestDate(){
-		return this.requestDate;
+		return this.receiptDate;
 	}
 
 	public int getQuantity() {

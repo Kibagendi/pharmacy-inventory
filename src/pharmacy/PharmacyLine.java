@@ -13,7 +13,7 @@ public class PharmacyLine implements Comparable{
 	private Laboratory laboratory;
 	//private LaboratoryLine laboratoryLine;
 	private Price price;
-	private Request request;
+	//private Request request;
 	private DecimalFormat twoDec = new DecimalFormat("0.00");
 
 	public PharmacyLine(PharmacyLine pharmacyLine){
@@ -124,24 +124,38 @@ public class PharmacyLine implements Comparable{
 		
 		if (this.currentStock< this.minStock)
 		{
-			requestProduct2Laboratory();
+			requestProduct();
 		}
 	}
 	
-	private boolean requestProduct2Laboratory(){
-		int orderQuantity; 
-		boolean bool = false;
+	public Request requestProduct(){
+		int orderQuantity;
+		Pharmacy pharmacy = Pharmacy.getInstance();
+		
+		Request request = null;
 		if (this.maxStock>0 ){
 			orderQuantity = this.maxStock - this.currentStock;
-			request = new Request(orderQuantity);
+			request = new Request(this, orderQuantity);
+			
+		}
+		return request;
+	}
+
+	public boolean recieveProduct(int quantity){
+		 
+		boolean bool = false;
+		if (this.maxStock>0 ){
+			quantity = this.maxStock - this.currentStock;
+			//request = new Request(orderQuantity);
 			//bool = request.send();
 		}
 		return bool;
 	}
+	
 	public int getMinStock() {
 		return minStock;
 	}
-
+	
 	public void setMinStock(int minStock) {
 		this.minStock = minStock;
 	}
@@ -178,13 +192,13 @@ public class PharmacyLine implements Comparable{
 		this.price = price;
 	}
 
-	public Request getRequest() {
+/*	public Request getRequest() {
 		return request;
 	}
 
 	public void setRequest(Request request) {
 		this.request = request;
-	}
+	}*/
 
 
 }

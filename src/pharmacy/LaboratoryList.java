@@ -16,11 +16,11 @@ public class LaboratoryList {
 	}
 
 
-	public TreeSet<Laboratory> getProductsCatalog() {
+	public TreeSet<Laboratory> getLaboratoryList() {
 		return laboratoryList;
 	}
 
-	public void setProductsCatalog(TreeSet<Laboratory> laboratoryList) {
+	public void setLaboratoryList(TreeSet<Laboratory> laboratoryList) {
 		this.laboratoryList = laboratoryList;
 	}
 
