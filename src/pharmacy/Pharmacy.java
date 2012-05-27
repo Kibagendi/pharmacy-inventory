@@ -96,6 +96,64 @@ public class Pharmacy {
 	}
 		
 
+
+	public boolean addRequestItem(Request item){
+		boolean bool;
+		try{
+			bool = this.requestList.add(item);
+		}catch(Exception ex) {
+			System.out.println("Error trying to add a Request in the Pharmacy.\n"+ex);
+			bool = false;
+		}
+
+		return bool;
+	}
+
+
+	public boolean removeRequestItem(Request item){
+		boolean bool = false;
+		try{
+			if(this.requestList.size()>0){
+				this.requestList.remove(item);
+				bool = true;
+			}
+		}catch(Exception ex) {
+			System.out.println("Error trying to delete a Request in the Pharmacy.\n"+ex);
+			bool = false;
+		}
+
+		return bool;
+	}
+
+	
+	public boolean addReceiptItem(Receipt item){
+		boolean bool;
+		try{
+			bool = this.receiptList.add(item);
+		}catch(Exception ex) {
+			System.out.println("Error trying to add a Receipt in the Pharmacy.\n"+ex);
+			bool = false;
+		}
+
+		return bool;
+	}
+
+
+	public boolean removeReceiptItem(Receipt item){
+		boolean bool = false;
+		try{
+			if(this.receiptList.size()>0){
+				this.receiptList.remove(item);
+				bool = true;
+			}
+		}catch(Exception ex) {
+			System.out.println("Error trying to delete a Receipt in the Pharmacy.\n"+ex);
+			bool = false;
+		}
+
+		return bool;
+	}
+
 	
 	public boolean addShoppingCarItem(ShoppingCar item){
 		boolean bool;
