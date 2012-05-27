@@ -10,7 +10,6 @@ public class Request implements Comparable{
 	private Date requestDate;
 	private int state;//1=sent, 2=processed 
 	private DateFormat df = new SimpleDateFormat ("yyyy-M-dd HH:mm:ss");
-	//private Laboratory laboratory;
 	private PharmacyLine pharmacyLine;
 	
 	public Request(PharmacyLine pharmacyLine, int quantity){
@@ -19,6 +18,13 @@ public class Request implements Comparable{
 		this.requestDate = new Date();
 		this.setState2Sent();
 		
+	}
+	
+	public boolean process (int quantity, double unitPrice){
+		boolean bool = this.getPharmacyLine().recieveProduct(quantity, unitPrice);
+		if (bool)
+			this.setState2Process();
+		return bool;
 	}
 	
 	public boolean equals( Object object ) {
@@ -65,11 +71,11 @@ public class Request implements Comparable{
 		this.quantity = quantity;
 	}
 	
-	public void setState2Sent() {
+	private void setState2Sent() {
 		this.state = 1;
 	}
 	
-	public void setState2Process() {
+	private void setState2Process() {
 		this.state = 2;
 	}
 	
@@ -86,9 +92,9 @@ public class Request implements Comparable{
 		return pharmacyLine;
 	}
 
-	/*public void setPharmacyLine(PharmacyLine pharmacyLine) {
-		this.pharmacyLine = pharmacyLine;
-	}*/
-
+	public String getDescription(){
+		return this.pharmacyLine.getProduct().getBrandName() +" - "+ this.pharmacyLine.getLaboratory().getName()+
+				" - "+ this.getRequestDateString();
+	}
 	
 }

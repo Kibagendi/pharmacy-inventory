@@ -1,6 +1,7 @@
 package pharmacy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
@@ -203,6 +204,20 @@ public class Pharmacy {
 	return 	null;
 	}
 	
+
+	public Request getRequest(int requestCode)
+	{
+		Request request = null;
+		Iterator <Request> it = this.requestList.iterator();
+		while (it.hasNext())
+		{
+			request =it.next();
+			if (request.hashCode()== requestCode)
+				return request;
+		}
+	return 	null;
+	}
+
 	public Iterator<PharmacyLine> getIterator() {
 		return this.pharmacyInventory.iterator();
 		}
@@ -210,7 +225,20 @@ public class Pharmacy {
 	public Iterator<Request> getRequestIterator() {
 		return this.requestList.iterator();
 		}
-		
+	
+	public Iterator<Request> getSentRequestIterator() {
+		@SuppressWarnings("unchecked")
+		TreeSet <Request> sendRequestList =  (TreeSet<Request>) requestList.clone();
+		Request reqTmp =null;
+		Iterator<Request> it = sendRequestList.iterator();
+		while (it.hasNext()){
+			reqTmp = (Request) it.next();
+			if (reqTmp.getState()!= "Sent")//1
+				it.remove();
+		}
+		return sendRequestList.iterator();
+	}	
+	
 	public Iterator<Receipt> getReceiptIterator() {
 		return this.receiptList.iterator();
 		}
