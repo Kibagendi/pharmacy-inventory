@@ -59,11 +59,35 @@ public class ShoppingCar {
 	public void closeShoppingCar(){
 		this.state= 2;//close
 		this.finalDate = new Date();
+		//watcher()
+		
+		Iterator <String> it = this.getIterator();
+		
+		while (it.hasNext()){
+			String shoppingLineKey = it.next();
+			ShoppingLine shoppingLine = this.getItem(shoppingLineKey);
+			shoppingLine.getPharmacyLine().watcher();
+		}
+
 	}
 
 	public void cancelShoppingCar(){
 		this.state= 3;//cancel
 		this.finalDate = new Date();
+		//undo
+
+		Pharmacy pharmacy = Pharmacy.getInstance();
+		Iterator <String> it = this.getIterator();
+		
+		while (it.hasNext()){
+			String shoppingLineKey = it.next();
+			ShoppingLine shoppingLine = this.getItem(shoppingLineKey);
+			int quantity = shoppingLine.getQuantity();
+			shoppingLine.getPharmacyLine().putInPharmacyLine(quantity);
+		}
+		
+		pharmacy.removeShoppingCarItem(this);		
+		
 	}
 
 	public int getState(){//1=open; 2=close; 3=cancel

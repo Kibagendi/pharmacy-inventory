@@ -11,9 +11,14 @@
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	ProductCatalog productCatalog = (ProductCatalog) session.getAttribute("productCatalog");
-	Pharmacy pharmacy = (Pharmacy) session.getAttribute("pharmacy");
-	LaboratoryList laboratoryList = (LaboratoryList) session.getAttribute("laboratoryList");
+	//Singleton objects declaration
+	Pharmacy pharmacy = Pharmacy.getInstance();
+	ProductCatalog productCatalog =  ProductCatalog.getInstance();
+	LaboratoryList laboratoryList = LaboratoryList.getInstance();
+
+	//ProductCatalog productCatalog = (ProductCatalog) session.getAttribute("productCatalog");
+	//Pharmacy pharmacy = (Pharmacy) session.getAttribute("pharmacy");
+	//LaboratoryList laboratoryList = (LaboratoryList) session.getAttribute("laboratoryList");
 	DecimalFormat twoDec = new DecimalFormat("0.00");
 
 %>
@@ -37,7 +42,7 @@
 				int pharmacyLineCode = Integer.parseInt(request.getParameter("pharmacyLineCode"));
 				pharmacyLine = pharmacy.getPharmacyLine(pharmacyLineCode);
 				pharmacy.removeItem(pharmacyLine);
-			 	session.setAttribute("pharmacy", pharmacy);
+			 	//session.setAttribute("pharmacy", pharmacy);
 			}
 
 			Iterator<PharmacyLine> it = pharmacy.getIterator();
@@ -212,7 +217,7 @@
 					   	 	//añadiendo el producto nuevo
 						 	pharmacyLine = new PharmacyLine(product, laboratory, new Price(buyPrice), currentStock, minStock, maxStock, location);	
 						 	ok =pharmacy.addItem(pharmacyLine);
-						 	session.setAttribute("pharmacy", pharmacy);
+						 	//session.setAttribute("pharmacy", pharmacy);
 						}
 					 catch(Exception ex)
 					 {

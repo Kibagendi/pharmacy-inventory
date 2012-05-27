@@ -6,8 +6,10 @@
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	ProductCatalog productCatalog = (ProductCatalog) session.getAttribute("productCatalog");
-	Pharmacy pharmacy = (Pharmacy) session.getAttribute("pharmacy");
+
+	//Singleton objects declaration
+	Pharmacy pharmacy = Pharmacy.getInstance();
+	ProductCatalog productCatalog =  ProductCatalog.getInstance();
 %>
 <html>
 <head>
@@ -29,7 +31,6 @@
 				int productCode = Integer.parseInt(request.getParameter("productCode"));
 				product = productCatalog.getProduct(productCode);
 				productCatalog.removeItem(product);
-			 	session.setAttribute("productCatalog", productCatalog);
 			}
 
 			Iterator<Product> it = productCatalog.getIterator();
@@ -179,7 +180,6 @@
 					   	 	//añadiendo el producto nuevo
 						 	product = new Product(brandName, primaryIngredient, strength, sizeOrCount, doseForm, administrationRoute);	
 						 	ok = productCatalog.addItem(product);
-						 	session.setAttribute("productCatalog", productCatalog);
 						}
 					 catch(Exception ex)
 					 {
@@ -289,7 +289,6 @@
 					   	 	//añadiendo el producto nuevo
 						 	product = new Product(brandName, primaryIngredient, strength, sizeOrCount, doseForm, administrationRoute);	
 						 	ok = productCatalog.addItem(product);
-						 	session.setAttribute("productCatalog", productCatalog);
 						}
 					 catch(Exception ex)
 					 {

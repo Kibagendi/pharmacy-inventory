@@ -207,18 +207,17 @@ public class Pharmacy {
 		return this.pharmacyInventory.iterator();
 		}
 	
+	public Iterator<Request> getRequestIterator() {
+		return this.requestList.iterator();
+		}
 		
+	public Iterator<Receipt> getReceiptIterator() {
+		return this.receiptList.iterator();
+		}
 
 	public ShoppingCar getShoppingCar(int shoppingCarId) {
 		return shoppingCarList.get(shoppingCarId);
 	}
 
-/*	public List<ShoppingCar> getBillList() {
-		return billList;
-	}
 
-	public void setBillList(List<ShoppingCar> billList) {
-		this.billList = billList;
-	}
-*/
 }
