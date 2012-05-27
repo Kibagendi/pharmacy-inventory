@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class Pharmacy {
+	
+	private static Pharmacy instance = null;
 
 	private String name;
 	private String address;
@@ -15,16 +17,30 @@ public class Pharmacy {
 	// Un TreeSet mantiene la lista ordenada. 
 	// El elemento a comparar debe contar con métodos equals, hashCode y compareTo.
 	private TreeSet <PharmacyLine> pharmacyInventory;
+	private TreeSet <Request> requestList;
+	private TreeSet <Receipt> receiptList;
 	private List <ShoppingCar> shoppingCarList;
 
 	
-	public Pharmacy(String name, String address){
+	private Pharmacy() {
 		pharmacyInventory = new TreeSet<PharmacyLine>();
+		requestList = new TreeSet<Request>();
+		receiptList = new TreeSet<Receipt>();
 		shoppingCarList = new ArrayList<ShoppingCar>();
-		this.name= name;
-		this.address = address;
+
+		this.name= "Farmacia Don Ramon";
+		this.address = "Calle Mayor 25, Madrid, Madrid";
+		this.telephone = "555-555-555";
+		
 	}
 	
+	public static synchronized Pharmacy getInstance() {
+		if(instance == null) {
+			instance = new Pharmacy();
+		}
+		return instance;
+	}
+
 	public String getName() {
 		return name == null ? " " : name;
 	}
