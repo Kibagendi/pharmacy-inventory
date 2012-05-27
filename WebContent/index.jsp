@@ -11,27 +11,31 @@
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	Pharmacy pharmacy = null;
-	
+	//Singleton objects declaration
+	Pharmacy pharmacy = Pharmacy.getInstance();
+	ProductCatalog productCatalog =  ProductCatalog.getInstance();
+	LaboratoryList laboratoryList = LaboratoryList.getInstance();
+
 
 	if(session.isNew()){
 
 		//Loading some basic data to work
 		
-		ProductCatalog productCatalog =  new ProductCatalog();
-		LaboratoryList laboratoryList = new LaboratoryList();
+		//ProductCatalog productCatalog =  new ProductCatalog();
+		//LaboratoryList laboratoryList = new LaboratoryList();
 
-		pharmacy = new Pharmacy("Farmacia Don Ramon","Calle 8");
 		
 		//Creating some Laboratories
 		Laboratory lab1 = new Laboratory("Bayer");	
 		Laboratory lab2 = new Laboratory("Menarini S.A.");	
-		Laboratory lab3 = new Laboratory("Roche");	
+		Laboratory lab3 = new Laboratory("Roche");
+		Laboratory lab4 = new Laboratory("Glaxo Smith Kline");
 
 		//Loading some basic products
 		laboratoryList.addItem(lab1);
 		laboratoryList.addItem(lab2);
 		laboratoryList.addItem(lab3);
+		laboratoryList.addItem(lab4);
 		
 		//Creating some Products
 		Product product1 = new Product("Aspirin 325mg x 30 Tablets", "Acetylsalicylic Acid", "325 mg", "30", "Tablet", "Oral");
@@ -41,6 +45,7 @@
 		Product product5 = new Product("Artificial Tears 15ml", "Polywinl Alcohol 0,5%", "15 ml","0,25 mg/ml", "Drops", "Ophthalmic");
 		Product product6 = new Product("Rinelon 15ml", "Mometasona Furoato 0,5%", "15 ml", "0,25 mg/ml", "Spray", "Nasal");
 		Product product7 = new Product("Loratadine 10mg", "Loratadine", "10 mg", "20", "Tablet", "Oral");
+		Product product8 = new Product("Ventolin 100mg", "Salbutamol", "0,5 mg", "200", "Spray", "Nasal");
 		
 
 		//Loading some basic products
@@ -51,15 +56,17 @@
 		productCatalog.addItem(product5);
 		productCatalog.addItem(product6);
 		productCatalog.addItem(product7);
+		productCatalog.addItem(product8);
 		
 		//Loading some products into the pharmacy inventory
-		pharmacy.addItem(new PharmacyLine(product1, lab1,new Price(9), 8));
-		pharmacy.addItem(new PharmacyLine(product2, lab1,new Price(8), 5));
-		pharmacy.addItem(new PharmacyLine(product3, lab1,new Price(10), 4));
-		pharmacy.addItem(new PharmacyLine(product4, lab2,new Price(15), 3));
-		pharmacy.addItem(new PharmacyLine(product5, lab2,new Price(20), 6));
+		pharmacy.addItem(new PharmacyLine(product1, lab1,new Price(9), 8, 3, 10, "A1"));
+		pharmacy.addItem(new PharmacyLine(product2, lab1,new Price(8), 5, 1, 5, "A2"));
+		pharmacy.addItem(new PharmacyLine(product3, lab1,new Price(10), 4, 2, 8, "A3"));
+		pharmacy.addItem(new PharmacyLine(product4, lab2,new Price(15), 3, 1, 5, "A1"));
+		pharmacy.addItem(new PharmacyLine(product5, lab2,new Price(20), 6, 2, 7, "A2"));
 		pharmacy.addItem(new PharmacyLine(product6, lab3,new Price(11), 5));
 		pharmacy.addItem(new PharmacyLine(product7, lab3,new Price(5), 3));
+		pharmacy.addItem(new PharmacyLine(product8, lab4,new Price(12), 2, 1, 3, "A3"));
 		
 		session.setAttribute("pharmacy",pharmacy);
 		session.setAttribute("productCatalog",productCatalog);

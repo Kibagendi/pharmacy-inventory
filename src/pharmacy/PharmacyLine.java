@@ -13,10 +13,10 @@ public class PharmacyLine implements Comparable{
 	private Laboratory laboratory;
 	//private LaboratoryLine laboratoryLine;
 	private Price price;
-	//private Request request;
+	private Boolean isRequested;
 	private DecimalFormat twoDec = new DecimalFormat("0.00");
 
-	public PharmacyLine(PharmacyLine pharmacyLine){
+/*	public PharmacyLine(PharmacyLine pharmacyLine){
 		this.product=  pharmacyLine.getProduct();
 		this.laboratory = pharmacyLine.getLaboratory();
 		this.price = pharmacyLine.getPrice();
@@ -24,7 +24,7 @@ public class PharmacyLine implements Comparable{
 		this.minStock = pharmacyLine.getMinStock();
 		this.maxStock = pharmacyLine.getMaxStock();
 		this.location = pharmacyLine.getLocation();
-	}
+	}*/
 	public PharmacyLine(Product product, Laboratory laboratory, Price price, int currentStock){
 		this.product= product;
 		this.laboratory = laboratory;
@@ -32,7 +32,7 @@ public class PharmacyLine implements Comparable{
 		this.currentStock = currentStock;
 		this.minStock =-1;
 		this.maxStock =-1;
-
+		this.isRequested = false;
 	}
 	
 	public PharmacyLine(Product product, Laboratory laboratory, Price price, int currentStock,int minStock, int maxStock, String location){
@@ -43,6 +43,7 @@ public class PharmacyLine implements Comparable{
 		this.minStock =minStock;
 		this.maxStock =maxStock;
 		this.location = location;
+		this.isRequested = false;
 
 	}
 
@@ -133,9 +134,11 @@ public class PharmacyLine implements Comparable{
 		Pharmacy pharmacy = Pharmacy.getInstance();
 		
 		Request request = null;
-		if (this.maxStock>0 ){
+		if (this.maxStock>0 && !isRequested){
 			orderQuantity = this.maxStock - this.currentStock;
 			request = new Request(this, orderQuantity);
+			pharmacy.addRequestItem(request);
+			this.isRequested = true;
 			
 		}
 		return request;
@@ -146,8 +149,7 @@ public class PharmacyLine implements Comparable{
 		boolean bool = false;
 		if (this.maxStock>0 ){
 			quantity = this.maxStock - this.currentStock;
-			//request = new Request(orderQuantity);
-			//bool = request.send();
+			this.isRequested = false;
 		}
 		return bool;
 	}

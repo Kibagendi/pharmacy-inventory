@@ -11,8 +11,19 @@ public class LaboratoryList {
 	private TreeSet <Laboratory> laboratoryList;
 
 	
-	public LaboratoryList(){
+	//Singleton implemantation
+	private static LaboratoryList instance = null;
+
+	private LaboratoryList(){
 		laboratoryList =  new TreeSet<Laboratory>();
+	}
+
+	
+	public static synchronized LaboratoryList getInstance() {
+		if(instance == null) {
+			instance = new LaboratoryList();
+		}
+		return instance;
 	}
 
 

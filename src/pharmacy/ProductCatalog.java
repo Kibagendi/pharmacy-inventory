@@ -1,5 +1,6 @@
 package pharmacy;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -10,12 +11,22 @@ public class ProductCatalog {
 	// El elemento a comparar debe contar con métodos equals, hashCode y compareTo.
 	private TreeSet <Product> productsCatalog;
 
-	
-	public ProductCatalog(){
+	//Singleton implemantation
+	private static ProductCatalog instance = null;
+
+	private ProductCatalog(){
 		productsCatalog =  new TreeSet<Product>();
 	}
 
-
+	
+	public static synchronized ProductCatalog getInstance() {
+		if(instance == null) {
+			instance = new ProductCatalog();
+		}
+		return instance;
+	}
+	
+	
 	public TreeSet<Product> getProductsCatalog() {
 		return productsCatalog;
 	}
