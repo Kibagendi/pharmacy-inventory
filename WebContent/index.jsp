@@ -78,16 +78,28 @@
 	<h2>Pharmacy Inventory System - <%=pharmacy.getName()%></h2>
 
 	<BR>
-	<p><a href="jsp/products.jsp?op=list">Products Catalog Management</a>
-	<p>
-	<p><a href="jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory Management</a>
-	<p>
-	<p><a href="jsp/receipts.jsp?op=list">Receipts Management</a>
-	<p>
-	<p><a href="jsp/requests.jsp">List of Requests</a>
-	<p>
-	<p><a href="jsp/seller.jsp?op=start">Sell products</a>
-	<p>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="jsp/products.jsp?op=list">Products Catalog Management</a></TD></TR>
+	<TR><TD align="center"><a href="jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory Management</a></TD></TR>
+	<TR><TD align="center"><a href="jsp/receipts.jsp?op=list">Receipts Management</a></TD></TR>
+	<TR><TD align="center"><a href="jsp/requests.jsp">List of Requests</a></TD></TR>
+	<TR><TD align="center"><a href="jsp/seller.jsp?op=start">Sell products</a></TD></TR>
+	</TABLE>
 
 </body>
 </html>
