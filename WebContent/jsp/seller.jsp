@@ -134,8 +134,24 @@
 	<h3>Canceling Shopping Car:</h3>
 	<p>
 	<b><font color="red">The Shopping Car was canceled.</font></b> 
-	<p>
-	<p><a href="../index.jsp">Home</a>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
 
 
 	<%
@@ -148,8 +164,27 @@
 	<h3>Finishing Shopping:</h3>
 	<p>
 	<b><font color="black">The Shopping process is complete.</font></b> 
-	<p>
-	<p><a href="../index.jsp">Home</a>
+	
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
+
 
 
 	<%
@@ -220,10 +255,11 @@
 
 	<TABLE align="center" BORDER=2>
 		<TR>
-			<TD colspan="6" align="center"><h2>Shopping Car #<%=shoppingCarId%>:</h2></TD>
+			<TD colspan="7" align="center"><h2>Shopping Car #<%=shoppingCarId%>:</h2></TD>
 		</TR>
 
 		<TR>
+			<TD align="center"><b>Number</b></TD>
 			<TD align="center"><b>Product</b></TD>
 			<TD align="center"><b>Laboratory</b></TD>
 			<TD align="center"><b>Quantity</b></TD>
@@ -235,9 +271,11 @@
 			Iterator <String> it_sc = shoppingCar.getIterator();
 			ShoppingLine shoppingLine;
 			String shoppingLineKey;
+			int i = 0;
 			//PharmacyLine pharmacyLine;
 			while (it_sc.hasNext()) {
 				shoppingLineKey = it_sc.next();
+				i++;
 				//System.out.println("it-shoppingLinekey:"+shoppingLinekey);
 				shoppingLine = shoppingCar.getItem(shoppingLineKey);
 				//System.out.println("shoppingLine:"+shoppingLine.hashCode());
@@ -245,6 +283,7 @@
 				//System.out.println("pharmacyLine:"+pharmacyLineAdd.hashCode());
 		%>
 		<TR>
+			<TD><%=i%></TD>
 			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
 			<TD><%=pharmacyLine.getLaboratory().getName()%></TD>
 			<TD align="center"><%=shoppingLine.getQuantity()%></TD>
@@ -258,7 +297,7 @@
 				%>	
 
 		<TR>
-			<TD colspan="4" align="right"><b>Total:  </b></TD>
+			<TD colspan="5" align="right"><b>Total:  </b></TD>
 			<TD  align="center"><b><%= twoDec.format(shoppingCar.getTotalPrice())%> EUR </b></TD>
 			<TD> </TD>
 		</TR>

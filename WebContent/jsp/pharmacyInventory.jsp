@@ -238,11 +238,15 @@
 	<%	
 		}
 	%>
-	
-	<p>
-	<p><a href="../jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory</a>
-	<p><a href="../jsp/pharmacyInventory.jsp?op=new">Add a new Pharmacy Line</a>
-	<p><a href="../index.jsp">Home</a>
-	<p>
+
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory</a></TD></TR>
+	<TR><TD align="center"><a href="../jsp/pharmacyInventory.jsp?op=new">Add a new Pharmacy Line</a></TD></TR>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
 </body>
 </html>

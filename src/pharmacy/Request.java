@@ -94,7 +94,7 @@ public class Request implements Comparable{
 
 	public String getDescription(){
 		return this.pharmacyLine.getProduct().getBrandName() +" - "+ this.pharmacyLine.getLaboratory().getName()+
-				" - "+ this.getRequestDateString();
+				" - QTY: "+ this.getQuantity()+" - Req Date: "+ this.getRequestDateString();
 	}
 	
 }

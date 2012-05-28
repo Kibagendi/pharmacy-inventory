@@ -169,10 +169,15 @@
 	<%
 	 }
 	%>
-		<p><a href="../jsp/receipts.jsp?op=list">List of Receipts</a>
-		<p><a href="../jsp/receipts.jsp?op=receive">Receipts Management (Product Reception)</a>
-		<p>
-			<a href="../index.jsp">Home</a>
-		<p>
+	
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../jsp/receipts.jsp?op=list">List of Receipts</a></TD></TR>
+	<TR><TD align="center"><a href="../jsp/receipts.jsp?op=receive">Receipts Management (Product Reception)</a></TD></TR>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
 </body>
 </html>

@@ -311,12 +311,15 @@
 	<%
 	 }
 	%>
-		<p>
-			<a href="../jsp/products.jsp?op=list">List of Products</a>
-		<p>
-			<a href="../jsp/products.jsp?op=new">Add a new Product in the catalog</a>
-		<p>
-			<a href="../index.jsp">Home</a>
-		<p>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../jsp/products.jsp?op=list">List of Products</a></TD></TR>
+	<TR><TD align="center"><a href="../jsp/products.jsp?op=new">Add a new Product in the catalog</a></TD></TR>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
+
 </body>
 </html>

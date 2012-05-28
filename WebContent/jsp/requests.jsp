@@ -54,9 +54,13 @@
 		%>
 
 	</TABLE>
-	<p>
-	<p>
-		<a href="../index.jsp">Home</a>
-	<p>
+
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
 </body>
 </html>
