@@ -162,6 +162,10 @@ public class PharmacyLine implements Comparable{
 		this.maxStock = maxStock;
 	}
 
+	public void setCurrentStock(int currentStock) {
+		this.currentStock = currentStock;
+	}
+
 	public Product getProduct() {
 		return product;
 	}

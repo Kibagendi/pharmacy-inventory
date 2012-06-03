@@ -226,6 +226,10 @@ public class Pharmacy {
 		return this.requestList.iterator();
 		}
 	
+	public Iterator<ShoppingCar> getShoppingCarIterator() {
+		return this.shoppingCarList.iterator();
+		}
+	
 	public Iterator<Request> getSentRequestIterator() {
 		@SuppressWarnings("unchecked")
 		TreeSet <Request> sendRequestList =  (TreeSet<Request>) requestList.clone();

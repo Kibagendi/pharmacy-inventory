@@ -90,8 +90,16 @@ public class ShoppingCar {
 		
 	}
 
-	public int getState(){//1=open; 2=close; 3=cancel
-		return this.state;
+	public String getState(){//1=open; 2=close; 3=cancel
+		String resp = "";
+		if (this.state == 1)
+			resp = "Open";
+		else if (this.state == 2)
+			resp = "Close";
+		else if (this.state == 3)
+			resp = "Cancel";
+		
+		return resp;
 	}
 
 	public String getCreationDateString(){

@@ -191,9 +191,9 @@
 			%>
 		<p>
 		<%if (ok) { %>
-			<b>The Product was modify succesfully.</b> 
+			<b>The Product was modified successfully.</b> 
 		<%}else { %>
-			<b><font color="red">The Product could not be modify.</font></b> 
+			<b><font color="red">The Product could not be modified.</font></b> 
 		<%	
 		 }
 		%>

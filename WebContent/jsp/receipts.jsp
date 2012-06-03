@@ -158,7 +158,7 @@
 			%>
 		<p>
 		<%if (ok) { %>
-			<b>The Products was received succesfully.</b> 
+			<b>The Products was received successfully.</b> 
 		<%}else { %>
 			<b><font color="red">The Products could not be received.</font></b> 
 		<%	
