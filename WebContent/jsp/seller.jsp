@@ -48,7 +48,7 @@
 					
 			if(request.getParameter("op").equals("start") ){
 				shoppingCarId = pharmacy.numberOfShoppingCars() + 1;
-				shoppingCar = new ShoppingCar("Client x", shoppingCarId);
+				shoppingCar = new ShoppingCar("Roberto Gomez", shoppingCarId);
 				pharmacy.addShoppingCarItem(shoppingCar);
 			}
 			else{//continue
@@ -182,11 +182,63 @@
 	<BR>
 
 	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../jsp/seller.jsp?op=list">List of Shopping Cars</a></TD></TR>
 	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
 	</TABLE>
 
+	<%
+		} else if (request.getParameter("op").equals("list") ) {
 
+	%>
+	<h3>List of Shopping Cars:</h3>
+	<p>
+	
+	<TABLE align="center" BORDER=2>
+		<TR>
+			<TD colspan="5" align="center"><h2>List of Shopping Cars</h2></TD>
+		</TR>
 
+		<TR>
+			<TD align="center"><b>Number</b></TD>
+			<TD align="center"><b>Client</b></TD>
+			<TD align="center"><b>Date</b></TD>
+			<TD align="center"><b>Total Price</b></TD>
+			<TD align="center"><b>State</b></TD>
+		</TR>
+
+		<%
+			ShoppingCar shoppingCar = null;
+			int i=0;
+			Iterator<ShoppingCar> it = pharmacy.getShoppingCarIterator();
+
+			while (it.hasNext()) {
+				shoppingCar = it.next();
+				i++;
+		%>
+		<TR>
+			<TD align="center"><a href="../jsp/seller.jsp?op=shoppingCar&shoppingCarId=<%=shoppingCar.getShoppingCarId()%>"><b><%=i%></b></a></TD>			
+			<TD><%=shoppingCar.getClient()%></TD>
+			<TD><%=shoppingCar.getCreationDateString()%></TD>
+			<TD align="center"><%=twoDec.format(shoppingCar.getTotalPrice())%></TD>
+			<TD align="center"><%=shoppingCar.getState()%></TD>
+		</TR>
+		<%
+			}
+		%>
+
+	</TABLE>
+
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../jsp/seller.jsp?op=start">Sell Products</a></TD></TR>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
 	<%
 		} else if (request.getParameter("op").equals("add")|| request.getParameter("op").equals("delete")) {
 			boolean ok = false;
@@ -334,8 +386,81 @@
 	</TABLE>
 	
 	<%
-	} //add or delete
+		} else if (request.getParameter("op").equals("shoppingCar")) {
+			boolean ok = false;
+			int shoppingCarId = Integer.parseInt(request.getParameter("shoppingCarId"));
+			
+			ShoppingCar shoppingCar = pharmacy.getShoppingCar(shoppingCarId-1);
+			int quantity=0; 
+			
 	%>
+	<h3>Shopping Car Details:</h3>
+	<p>
+
+
+	<TABLE align="center" BORDER=2>
+		<TR>
+			<TD colspan="6" align="center"><h2>Shopping Car #<%=shoppingCarId%>:</h2></TD>
+		</TR>
+
+		<TR>
+			<TD align="center"><b>Number</b></TD>
+			<TD align="center"><b>Product</b></TD>
+			<TD align="center"><b>Laboratory</b></TD>
+			<TD align="center"><b>Quantity</b></TD>
+			<TD align="center"><b>Unit Price</b></TD>
+			<TD align="center"><b>Total Price</b></TD>
+		</TR>
+		<%
+			Iterator <String> it_sc = shoppingCar.getIterator();
+			ShoppingLine shoppingLine;
+			String shoppingLineKey;
+			int i = 0;
+			PharmacyLine pharmacyLine;
+			while (it_sc.hasNext()) {
+				shoppingLineKey = it_sc.next();
+				i++;
+				//System.out.println("it-shoppingLinekey:"+shoppingLinekey);
+				shoppingLine = shoppingCar.getItem(shoppingLineKey);
+				//System.out.println("shoppingLine:"+shoppingLine.hashCode());
+				pharmacyLine = shoppingLine.getPharmacyLine();
+				//System.out.println("pharmacyLine:"+pharmacyLineAdd.hashCode());
+		%>
+		<TR>
+			<TD><%=i%></TD>
+			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
+			<TD><%=pharmacyLine.getLaboratory().getName()%></TD>
+			<TD align="center"><%=shoppingLine.getQuantity()%></TD>
+			<TD align="center"><%=twoDec.format(pharmacyLine.getPrice().getSellPrice())%> EUR </TD>
+			<TD align="center"><%=twoDec.format(shoppingLine.getTotalPrice())%> EUR </TD>
+		</TR>
+
+				<%
+					}
+				%>	
+
+		<TR>
+			<TD colspan="5" align="right"><b>Total:  </b></TD>
+			<TD  align="center"><b><%= twoDec.format(shoppingCar.getTotalPrice())%> EUR </b></TD>
+		</TR>
+	</TABLE>
+
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+
+
+	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><a href="../jsp/seller.jsp?op=list">Shopping Car List</a></TD></TR>
+	<TR><TD align="center"><a href="../jsp/seller.jsp?op=start">Sell Products</a></TD></TR>
+	<TR><TD align="center"><a href="../index.jsp">Home</a></TD></TR>
+	</TABLE>
 	
+	<%
+	} //shoppingCar
+	%>
 </body>
 </html>

@@ -55,14 +55,14 @@
 		productCatalog.addItem(product8);
 		
 		//Loading some products into the pharmacy inventory
-		pharmacy.addItem(new PharmacyLine(product1, lab1,new Price(9), 8, 3, 10, "A1"));
-		pharmacy.addItem(new PharmacyLine(product2, lab1,new Price(8), 5, 1, 5, "A2"));
-		pharmacy.addItem(new PharmacyLine(product3, lab1,new Price(10), 4, 2, 8, "A3"));
-		pharmacy.addItem(new PharmacyLine(product4, lab2,new Price(15), 3, 1, 5, "A1"));
-		pharmacy.addItem(new PharmacyLine(product5, lab2,new Price(20), 6, 2, 7, "A2"));
-		pharmacy.addItem(new PharmacyLine(product6, lab3,new Price(11), 5));
-		pharmacy.addItem(new PharmacyLine(product7, lab3,new Price(5), 3));
-		pharmacy.addItem(new PharmacyLine(product8, lab4,new Price(12), 2, 1, 3, "A3"));
+		pharmacy.addItem(new PharmacyLine(product1, lab1,new Price(9.0), 8, 3, 10, "A1"));
+		pharmacy.addItem(new PharmacyLine(product2, lab1,new Price(8.0), 5, 1, 5, "A2"));
+		pharmacy.addItem(new PharmacyLine(product3, lab1,new Price(10.0), 4, 2, 8, "A3"));
+		pharmacy.addItem(new PharmacyLine(product4, lab2,new Price(15.0), 3, 1, 5, "A1"));
+		pharmacy.addItem(new PharmacyLine(product5, lab2,new Price(20.0), 6, 2, 7, "A2"));
+		pharmacy.addItem(new PharmacyLine(product6, lab3,new Price(11.0), 5));
+		pharmacy.addItem(new PharmacyLine(product7, lab3,new Price(5.0), 3));
+		pharmacy.addItem(new PharmacyLine(product8, lab4,new Price(12.0), 2, 1, 3, "A3"));
 		
 	}
  %>
@@ -77,10 +77,7 @@
 
 	<h2>Pharmacy Inventory System - <%=pharmacy.getName()%></h2>
 
-	<BR>
-	<BR>
-	<BR>
-	<BR>
+		<BR>
 	<BR>
 	<BR>
 	<BR>
@@ -98,7 +95,8 @@
 	<TR><TD align="center"><a href="jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory Management</a></TD></TR>
 	<TR><TD align="center"><a href="jsp/receipts.jsp?op=list">Receipts Management</a></TD></TR>
 	<TR><TD align="center"><a href="jsp/requests.jsp">List of Requests</a></TD></TR>
-	<TR><TD align="center"><a href="jsp/seller.jsp?op=start">Sell products</a></TD></TR>
+	<TR><TD align="center"><a href="jsp/seller.jsp?op=start">Sell Products</a></TD></TR>
+	<TR><TD align="center"><a href="jsp/seller.jsp?op=list">List of Shopping Cars</a></TD></TR>
 	</TABLE>
 
 </body>

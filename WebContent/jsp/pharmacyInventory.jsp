@@ -13,11 +13,10 @@
 <%
 	//Singleton objects declaration
 	Pharmacy pharmacy = Pharmacy.getInstance();
-	ProductCatalog productCatalog =  ProductCatalog.getInstance();
+	ProductCatalog productCatalog = ProductCatalog.getInstance();
 	LaboratoryList laboratoryList = LaboratoryList.getInstance();
 
-	DecimalFormat twoDec = new DecimalFormat("0.00");
-
+	DecimalFormat twoDec = new DecimalFormat("#,##0.00;(#,##0.00)");
 %>
 
 <html>
@@ -30,20 +29,20 @@
 	<p>
 
 	<%
-		if (request.getParameter("op").equals("list") ||  request.getParameter("op").equals("delete")) {
+		if (request.getParameter("op").equals("list")
+				|| request.getParameter("op").equals("delete")) {
 
-			PharmacyLine pharmacyLine = null;			
-	
-			if(request.getParameter("op").equals("delete"))
-			{
-				int pharmacyLineCode = Integer.parseInt(request.getParameter("pharmacyLineCode"));
+			PharmacyLine pharmacyLine = null;
+
+			if (request.getParameter("op").equals("delete")) {
+				int pharmacyLineCode = Integer.parseInt(request
+						.getParameter("pharmacyLineCode"));
 				pharmacyLine = pharmacy.getPharmacyLine(pharmacyLineCode);
 				pharmacy.removeItem(pharmacyLine);
-			 	//session.setAttribute("pharmacy", pharmacy);
+				//session.setAttribute("pharmacy", pharmacy);
 			}
 
 			Iterator<PharmacyLine> it = pharmacy.getIterator();
-
 	%>
 	<h3>Pharmacy Inventory:</h3>
 	<p>
@@ -67,7 +66,7 @@
 
 		<%
 			while (it.hasNext()) {
-				pharmacyLine = it.next();
+					pharmacyLine = it.next();
 		%>
 		<TR>
 			<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
@@ -89,23 +88,19 @@
 		Number of Lines:
 		<%
 		out.println(pharmacy.Size());
-	%>
-	
-	
-	
-			<%
+		%>
+
+		<%
 			// new option
 			} else if (request.getParameter("op").equals("new")) {
-				
+
 				Product product = null;
 				Laboratory laboratory = null;
-				Iterator <Product> it_p = null;
-				Iterator <Laboratory> it_l = null;
+				Iterator<Product> it_p = null;
+				Iterator<Laboratory> it_l = null;
 				String optionName = new String();
 				int optionCode;
-
-		%>
-	<h3>Adding a new Pharmacy Line in the Inventory:</h3>
+		%><h3>Adding a new Pharmacy Line in the Inventory:</h3>
 	<p>
 	
 	<FORM method="post" action="../jsp/pharmacyInventory.jsp?op=postNew">
@@ -117,15 +112,15 @@
 				<TD>
 				<select name="productCode" id="productCode">
 				<%
-				it_p = productCatalog.getIterator();
-				while (it_p.hasNext()) {
-					product = it_p.next();
-					optionName = product.getBrandName();
-					optionCode = product.hashCode();
+					it_p = productCatalog.getIterator();
+						while (it_p.hasNext()) {
+							product = it_p.next();
+							optionName = product.getBrandName();
+							optionCode = product.hashCode();
 				%>	
 						<option value="<%=optionCode%>"><%=optionName%></option>
 				<%
-				}				
+					}
 				%>	
 				</select> 
 				</TD>
@@ -135,15 +130,15 @@
 				<TD>
 				<select name="laboratoryCode" id="laboratoryCode">
 				<%
-				it_l = laboratoryList.getIterator();
-				while (it_l.hasNext()) {
-					laboratory = it_l.next();
-					optionName = laboratory.getName();
-					optionCode = laboratory.hashCode();
+					it_l = laboratoryList.getIterator();
+						while (it_l.hasNext()) {
+							laboratory = it_l.next();
+							optionName = laboratory.getName();
+							optionCode = laboratory.hashCode();
 				%>	
 						<option value="<%=optionCode%>"><%=optionName%></option>
 				<%
-				}				
+					}
 				%>	
 				</select> 
 				</TD>
@@ -179,65 +174,164 @@
 	</FORM>
 
 
-			<%//postNew
-				} 
-				else if (request.getParameter("op").equals("postNew")) {
-					
-					 PharmacyLine pharmacyLine;
-					 Product product;
-					 Laboratory laboratory;
-					
-					 int productCode= Integer.parseInt(request.getParameter("productCode"));
-					 int laboratoryCode= Integer.parseInt(request.getParameter("laboratoryCode"));
-					 int currentStock = 0, minStock =-1, maxStock =-1;
-					 double buyPrice =0 ;
-					 String location = request.getParameter("location");//location= "";
-					 
-					 //if(!request.getParameter("location").isEmpty())
+			<%
+				//postNew
+				} else if (request.getParameter("op").equals("postNew")) {
+
+					PharmacyLine pharmacyLine;
+					Product product;
+					Laboratory laboratory;
+
+					int productCode = Integer.parseInt(request.getParameter("productCode"));
+					int laboratoryCode = Integer.parseInt(request.getParameter("laboratoryCode"));
+					int currentStock = 0, minStock = -1, maxStock = -1;
+					double buyPrice = 0;
+					String location = request.getParameter("location");//location= "";
+
+					//if(!request.getParameter("location").isEmpty())
 					//	 location = request.getParameter("location");
-					 if(!request.getParameter("currentStock").isEmpty())
-					 	currentStock = Integer.parseInt(request.getParameter("currentStock"));
-					 if(!request.getParameter("minStock").isEmpty())
-					 	minStock = Integer.parseInt(request.getParameter("minStock"));
-					 if(!request.getParameter("maxStock").isEmpty())
-					 	maxStock = Integer.parseInt(request.getParameter("maxStock"));
-					 if(!request.getParameter("buyPrice").isEmpty())
-					 	buyPrice =  Double.valueOf(request.getParameter("buyPrice"));
-					 
-					 boolean ok= false;
-					 
-					 product = productCatalog.getProduct(productCode);
-					 laboratory = laboratoryList.getLaboratory(laboratoryCode);
-					 
-					 try {
+					if (!request.getParameter("currentStock").isEmpty())
+						currentStock = Integer.parseInt(request.getParameter("currentStock"));
+					if (!request.getParameter("minStock").isEmpty())
+						minStock = Integer.parseInt(request.getParameter("minStock"));
+					if (!request.getParameter("maxStock").isEmpty())
+						maxStock = Integer.parseInt(request.getParameter("maxStock"));
+					if (!request.getParameter("buyPrice").isEmpty())
+						buyPrice = Double.valueOf(request.getParameter("buyPrice"));
 
-					   	 	//añadiendo el producto nuevo
-						 	pharmacyLine = new PharmacyLine(product, laboratory, new Price(buyPrice), currentStock, minStock, maxStock, location);	
-						 	ok =pharmacy.addItem(pharmacyLine);
-						 	//session.setAttribute("pharmacy", pharmacy);
-						}
-					 catch(Exception ex)
-					 {
-						 System.out.println("Error saving the new Pharmacy Line: " + ex);
-						 ok= false;
-					 }
-					
+					boolean ok = false;
 
+					product = productCatalog.getProduct(productCode);
+					laboratory = laboratoryList.getLaboratory(laboratoryCode);
+
+					try {
+
+						//añadiendo el producto nuevo
+						pharmacyLine = new PharmacyLine(product, laboratory,new Price(buyPrice), currentStock, minStock, maxStock, location);
+						ok = pharmacy.addItem(pharmacyLine);
+						//session.setAttribute("pharmacy", pharmacy);
+					} catch (Exception ex) {
+						System.out.println("Error saving the new Pharmacy Line: "+ ex);
+						ok = false;
+					}
 			%>
 		<p>
-		<%if (ok) { %>
-			<b>The Pharmacy Line was create succesfully.</b> 
-		<%}else { %>
-			<b><font color="red">The Pharmacy Line could not be created.</font></b> 
-		<%	
-		 }
+		<%
+			if (ok) {
 		%>
+			<b>The Pharmacy Line was created successfully.</b> 
+		<%
+ 			} else {
+ 		%>
+			<b><font color="red">The Pharmacy Line could not be created.</font></b> 
+		<%
+ 			}
+		%>
+
+		<%
+			// new option
+			} else if (request.getParameter("op").equals("edit")) {
+
+				int pharmacyLineCode = 0;
+				if (!request.getParameter("pharmacyLineCode").isEmpty())
+					pharmacyLineCode = Integer.parseInt(request.getParameter("pharmacyLineCode"));
+				PharmacyLine pharmacyLine = pharmacy.getPharmacyLine(pharmacyLineCode);
+				session.setAttribute("editPharmacyLine", pharmacyLine);
+
+		%><h3>Modifying a Pharmacy Line information in the Inventory:</h3>
+	<p>
 	
+	<FORM method="post" action="../jsp/pharmacyInventory.jsp?op=postEdit">
+
+		<TABLE align="center" BORDER=2>
+
+			<TR>
+				<TD><b>Product:</b></TD>
+				<TD><%=pharmacyLine.getProduct().getBrandName()%></TD>
+			</TR>
+			<TR>
+				<TD><b>Laboratory:</b></TD>
+				<TD><%=pharmacyLine.getLaboratory().getName()%></TD>			</TR>
+			<TR>
+				<TD><b>Buy Price:</b></TD>
+				<TD><INPUT TYPE=TEXT NAME=buyPrice SIZE=20 VALUE="<%=pharmacyLine.getPrice().getBuyPrice()%>"></TD>
+			</TR>
+			<TR>
+				<TD><b>Current Stock:</b></TD>
+				<TD><INPUT TYPE=TEXT NAME=currentStock SIZE=20 VALUE="<%=pharmacyLine.getCurrentStock()%>"></TD>
+			</TR>
+			<TR>
+				<TD><b>Min Stock:</b></TD>
+				<TD><INPUT TYPE=TEXT NAME=minStock SIZE=20 VALUE="<%=pharmacyLine.getMinStock()%>"></TD>
+			</TR>
+			<TR>
+				<TD><b>Max Stock:</b></TD>
+				<TD><INPUT TYPE=TEXT NAME=maxStock SIZE=20 VALUE="<%=pharmacyLine.getMaxStock()%>"></TD>
+			</TR>
+			<TR>
+				<TD><b>Location:</b></TD>
+				<TD><INPUT TYPE=TEXT NAME=location SIZE=20 VALUE="<%=pharmacyLine.getLocation()%>"></TD>
+			</TR>
+
+			<TR>
+				<TD colspan="2" align="center"><INPUT type=reset value="Reset" /><INPUT
+					type=submit value="Modify" /></TD>
+			</TR>
+
+		</TABLE>
+	</FORM>
+
+
+			<%
+				//postEdit
+				} else if (request.getParameter("op").equals("postEdit")) {
+
+					PharmacyLine pharmacyLine;
+
+					int currentStock = 0, minStock = -1, maxStock = -1;
+					Double buyPrice = new Double (0);
+					String location = request.getParameter("location");
+					boolean ok = false;
+
+					if (!request.getParameter("currentStock").isEmpty())
+						currentStock = Integer.parseInt(request.getParameter("currentStock"));
+					if (!request.getParameter("minStock").isEmpty())
+						minStock = Integer.parseInt(request.getParameter("minStock"));
+					if (!request.getParameter("maxStock").isEmpty())
+						maxStock = Integer.parseInt(request.getParameter("maxStock"));
+					if (!request.getParameter("buyPrice").isEmpty())
+						buyPrice = Double.valueOf(request.getParameter("buyPrice"));
+
+					try {
+
+						//añadiendo el producto nuevo
+						pharmacyLine = (PharmacyLine) session.getAttribute("editPharmacyLine");
+						pharmacyLine.setCurrentStock(currentStock);
+						pharmacyLine.setMaxStock(maxStock);
+						pharmacyLine.setMinStock(minStock);
+						pharmacyLine.setLocation(location);
+						pharmacyLine.setPrice(new Price(buyPrice));
+						
+						ok = true;
+					} catch (Exception ex) {
+						System.out.println("Error trying to modify the Pharmacy Line: "+ ex);
+						ok = false;
+					}
+			%>
 		<p>
-	
-	<%	
+		<%
+			if (ok) {
+		%>
+			<b>The Pharmacy Line was modified successfully.</b> 
+		<%
+ 			} else {
+ 		%>
+			<b><font color="red">The Pharmacy Line could not be modified.</font></b> 
+		<%
+ 			}
 		}
-	%>
+		%>
+
 
 	<BR>
 	<BR>
