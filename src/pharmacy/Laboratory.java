@@ -1,6 +1,5 @@
 package pharmacy;
 
-import java.util.TreeSet;
 
 public class Laboratory implements Comparable{
 

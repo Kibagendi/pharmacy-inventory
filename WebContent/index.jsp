@@ -3,7 +3,6 @@
 	import="pharmacy.Pharmacy"
 	import="pharmacy.PharmacyLine"
 	import="pharmacy.Laboratory"
-	import="pharmacy.LaboratoryLine"
 	import="pharmacy.LaboratoryList"
 	import="pharmacy.Price"
 	import="pharmacy.ProductCatalog"
@@ -77,7 +76,7 @@
 
 	<h2>Pharmacy Inventory System - <%=pharmacy.getName()%></h2>
 
-		<BR>
+	<!-- 	<BR>
 	<BR>
 	<BR>
 	<BR>
@@ -88,9 +87,10 @@
 	<BR>
 	<BR>
 	<BR>
-	<BR>
+	<BR> -->
 
 	<TABLE align="center" BORDER=0>
+	<TR><TD align="center"><img  title="pharmacist" src="img/pharmacistpic.jpg" alt="pharmacist" width="425" height="282" /></TD></TR>
 	<TR><TD align="center"><a href="jsp/products.jsp?op=list">Products Catalog Management</a></TD></TR>
 	<TR><TD align="center"><a href="jsp/pharmacyInventory.jsp?op=list">Pharmacy Inventory Management</a></TD></TR>
 	<TR><TD align="center"><a href="jsp/receipts.jsp?op=list">Receipts Management</a></TD></TR>
